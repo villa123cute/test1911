@@ -18,7 +18,7 @@ public class BillItem {
 	private Integer status;
 	// 
 	//0220 jbj 5
-	//  8 9 9
+	//  8 9 9 6
 	
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	private Date arrivalDate;
