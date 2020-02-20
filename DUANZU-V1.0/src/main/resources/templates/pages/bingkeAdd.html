@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<style>
+/* 这里添加样式 */
+
+	#xx {
+		font-size:20px;
+		font-weight:700;
+	}
+</style>
+</head>
+<body>
+	<div>
+		<h3>添加宾客</h3>
+	</div>
+	<br/>
+		<table style="font-size:15px; letter-spacing:3px;">
+			<tr><td id="xx">基本信息</td></tr>
+           <tr><!-- 用户名 -->
+              <td>姓名:</td>
+              <td><!-- 普通文本输入框 -->
+                  <input type="text"  name="username" id="realName"/>
+              </td>
+           </tr>
+
+
+
+           <tr>
+              <td>身份证号码:</td>
+              <td><!-- 普通输入框 -->
+                  <input type="text" id="idcard" name="idcard"  maxlength="18" oninput = "value=value.replace(/[\W]/g,'')"/>
+              </td>
+           </tr>
+           
+           
+           
+           
+           <tr><!-- 性别 -->
+              <td>性别:</td>   
+              <td id="sex"><!-- 单选框 -->
+                  <input type="radio"  name="gender" 
+                     value="男"  checked="checked"/>男
+                  <input type="radio"  name="gender" 
+                     value="女"/>女
+              </td>     
+           </tr>
+           
+           
+           
+           
+           <tr><!-- 手机号 -->
+              <td>手机号码:</td>  
+              <td>
+                  <input type="text"  id="phoneNumber" name="telephoneNumber" maxlength="11" oninput = "value=value.replace(/[^\d]/g,'')"/>
+              </td>     
+           </tr>
+           
+           <tr><td id="xx">其他信息</td></tr>
+           
+           <tr><!-- 城市 -->
+              <td>会员等级:</td>
+              <td>
+                  <select id="memberlevel" >
+                     <option>普通会员</option>
+                     <option>银卡会员</option>
+                     <option>金卡会员</option>
+                  </select>
+              </td>
+           </tr>
+           
+           
+           
+           
+           <tr><!-- 备注  -->
+              <td>备注:</td>
+              <td>
+                  <textarea rows="5" cols="30"  id="comment"
+                     placeholder="请输入备注信息"></textarea>
+              </td> 
+           </tr>
+           
+           
+           
+           <tr><!-- 提交按钮 -->
+              <td colspan="2"  style="text-align:center;">
+                  <input type="button"  value="提交" id="tij" onclick="tijiao()"/>
+              </td>
+           </tr>  
+       </table>
+<script type="text/javascript">
+  /* console.log(result); */
+  /* alert(asd); */
+  /* debugger */
+  
+  $(function(){
+	  //$("#tij").on("click",tijiao);
+		$("#right").on("#tij","click",tijiao);
+  })
+  
+  function tijiao(){
+	  var url="guest/inset";
+		var params={"landlordId":1,
+					"realName":$("#realName").val(),
+					"sex":$("input[type='radio']:checked").val(),
+					"phoneNumber":$("#phoneNumber").val(),
+					"idCard":$("#idcard").val(),
+					"memberlevel":$("#memberlevel").val(),
+					"comment":$("#comment").val()
+					};
+		console.log(params);
+		$.getJSON(url,params,function(){
+			$("#right").load("bingke.html");
+		});
+  }
+</script>	
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页</title>
+    <link rel="stylesheet" href="public/css/index.css"/>
+   <!--  <script src="public/js/jquery-1.8.3.min.js"></script> -->
+    <!-- <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script> -->
+	<script src="public/js/jquery.3.3.1.jquery.min.js"></script>
+    <script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+</head>
+<body>
+    <div id="head">
+    	<div class="wrap-lg">
+    		<div class="top-title">
+    			<h1 class="title">短租平台</h1>			
+    		</div>
+    		<div class="top-info">
+    			<a class="dropbtn">用户A</a>
+    			<div class="dropdown-content">
+			      <a href="#">个人资料</a>
+			      <a href="#">修改密码</a>
+			      <a href="#">退出</a>
+			    </div>
+    		</div>
+    	</div>
+    </div>
+    <div id="container">
+        <div id="left">
+            <div id="step-content">
+            	<h4 class="showlia">
+            		<span>交易管理</span>
+            	</h4>
+            	<ul class="step-ul">
+            		<li class="lia">
+            			<span id="dingdan.html">订单管理</span>
+            		</li >
+            	</ul>
+            	<h4 class="showlia">
+            		<span>房源管理</span>
+            	</h4>
+            	<ul class="step-ul">
+            		<li class="lia">
+            			<span id="house/houseAdministration.html">房屋管理</span>
+            		</li>
+            		<li class="lia">
+            			<span id="priceControl.html">价格管理</span>
+            		</li>
+            	</ul>
+            	<h4 class="showlia">
+            		<span>财务管理</span>
+            	</h4>
+            	<ul class="step-ul">
+            		<li class="lia">
+            			<span id="billManage.html">账单管理</span>
+            		</li>
+            		<li class="lia">
+            			<span id="jiesuanc.html">结算查询</span>
+            		</li>
+            		<li class="lia">
+            			<span id="jiesuans.html">结算设置</span>
+            		</li>           		
+            		<li class="lia">
+            			<span id="bingke.html">宾客管理</span>
+            		</li>
+            	</ul>
+            	<h4 class="showlia">
+           			<span>商家管理</span>
+           		</h4>
+           		<ul class="step-ul">
+            		<li class="lia">
+            			<span id="InformationEentry.html">资质信息录入</span>
+            		</li>           		
+            		<li class="lia">
+            			<span id="detail.html">资质信息审核</span>
+            		</li>
+            	</ul>
+            	<h4 class="showlia">
+           			<span>经营管理</span>
+           		</h4>
+            	<ul class="step-ul"> 
+            		<li class="lia">
+            			<span id="gaikuang.html">经营概况</span>
+            		</li>
+            	</ul>
+           		<h4 class="showlia">
+           			<span>系统设置</span>
+           		</h4>
+           		<ul class="step-ul">
+            		<li class="lia">
+            			<span id="mendian.html">门店设置</span>
+            		</li>
+            	</ul>
+            </div>
+        </div>
+        <div id="right">
+		</div>
+    </div>
+    <script>
+    	$(".lia").on("click",function(){
+    		$(".lia").removeAttr("id");
+    		$(this).attr("id","select");
+    	}).on("click",function(){
+    		var str = $(this).children("span").attr("id");
+    		if(str){
+    			$("#right").load(str);	
+    		}
+    	});
+    	$(".step-ul:eq(0)").show();
+    	$(".showlia").on("click",function(){
+    		$(this).next("ul.step-ul").slideToggle(200);
+    		<!-- .siblings("ul.step-ul").slideUp() -->
+    	});
+    	$(function(){
+    		const UI="fenye";
+    		$("#right").load(UI,dofenyeUI);
+    	})
+    	function dofenyeUI(){
+    		console.log("dsadsa");
+    	}
+    </script>
+</body>
+</html>

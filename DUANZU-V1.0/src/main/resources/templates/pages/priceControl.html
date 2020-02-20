@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>价格管理</title>
+    <script src="public/js/priceControl.js"></script>
+    <script src="public/js/formatDate.js"></script>
+    <script src="public/js/calendar.js"></script>
+    <link rel="stylesheet" href="public/css/priceControl.css"/>
+</head>
+<body> 
+<div id="floor">
+    <div class="diva">
+        <div class="divb">
+            <span id="spa">价格管理</span>
+            <span style="float: right"><button class="bua">选择房屋</button></span>
+        </div>
+        <div class="divb" style="margin-bottom:3px"><hr style="border: 1px solid #e8e8ea"></hr></div>
+        <div class="divb">
+            <span>
+                <input type="date" id="inputDate"></input>
+                <button class="bua">查询</button>
+                <button id="weekBefore">&lt前一周</button>
+                <button id="weekAfter">后一周&gt</button>
+                <button>8月-新开放</button>
+                <select style="border:2px solid #e8e8ea;">
+                    <option>七夕</option>
+                    <option>国庆</option>
+                </select>
+            </span>
+            <span style="float: right">
+                <input type="checkbox" name="status">可售</input>
+                <input type="checkbox" name="status">已售空</input>
+                <input type="checkbox" name="status">已关房</input>
+            </span>
+        </div>
+    </div>
+    <div class="diva">
+        <table>
+       		<tr id="date"></tr>
+           	<tr id="week"></tr>
+        </table>
+    </div>
+</div>
+	<script type="text/javascript">
+    	priceControl();
+    </script>
+</body>
+</html>

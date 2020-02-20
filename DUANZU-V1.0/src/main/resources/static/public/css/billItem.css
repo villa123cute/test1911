@@ -1,0 +1,120 @@
+* { 
+    margin: 0px;
+    padding: 0px;
+}
+
+.itemHead{
+    box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px 0 rgba(63,63,68,.15);
+    width: 980px;
+    margin: 0px auto;
+    height: 40px;
+    padding: 10px;
+}
+
+.billItem{
+    margin: 15px auto;
+    height: 290px;
+    width: 1000px;
+}
+
+.itemLeft{
+    box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px 0 rgba(63,63,68,.15);
+    float: left;
+    width: 570px;
+    height: 270px;
+    padding: 10px;
+}
+
+.itemRight{
+    box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px 0 rgba(63,63,68,.15);
+    margin-left: 605px;
+    width: 375px;
+    height: 270px;
+    padding: 10px;
+}
+
+.billTable{
+    width: 375px;
+    border-collapse:collapse;
+}
+
+.dataDisplay{
+    text-align: right;
+}
+
+.billTable tr{
+    height: 30px;
+}
+.billTable tr td{
+    padding: 0px 10px;
+}
+
+.billTable tr:nth-child(odd){
+    background-color: #f8f8f9;
+}
+
+.billTable tr:nth-child(even){
+    background-color: white;
+}
+
+.itemHead .heeadLeft{
+    float: left;
+    padding: 10px 0px;
+}
+
+.itemHead .headRight{
+    float: right;
+    padding: 5px 0px;
+}
+
+.headRight .billButton{
+    padding: 5px 10px;
+}
+
+.liquidate{
+    margin-top: 15px;
+    padding: 10px 0px;
+}
+
+.liquidate div{
+    float: right;
+    margin-bottom: 10px;
+}
+
+.liquidateTable{
+    width: 100%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.liquidateTable tr{
+    /* 添加边框 */
+    border:2px solid #e8e8ea;
+    background-color: #f8f8f9;
+}
+
+.ableRemoveLiquidate{
+    /* 添加边框 */
+    border:2px solid #e8e8ea;
+    background-color: #f8f8f9;
+}
+
+.ableRemoveLiquidate td{
+	padding: auto;
+    font-size: 14px;
+    text-align: center;
+    padding: 10px;
+}
+
+th{
+    padding: auto;
+    font-size: 14px;
+    text-align: center;
+    padding: 10px;
+    background-color: #f8f8f9;
+}
+
+.ableRemoveLiquidate:nth-child(even){
+	background-color: white;
+}

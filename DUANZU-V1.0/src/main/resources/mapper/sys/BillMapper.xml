@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tedu.duanzu.Dao.BillDao">
+	<select id="findBillByStatus" resultType="com.tedu.duanzu.entity.BillItem">
+		select * from tb_bill
+		<where>
+			landlord_id = #{landlordId}
+			<if test="status!=null">
+				and status = #{status}
+			</if>
+		</where>
+		limit #{startIndex},#{pageSize}
+	</select>
+	<select id="getRowCount" resultType="int">
+		select count(*) from tb_bill
+		<where>
+			landlord_id = #{landlordId}
+			<if test="status!=null">
+				and status = #{status}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findLandlordInfo" resultType="com.tedu.duanzu.entity.LandlordInfo">
+		select id,nickname,service_number,service_email
+		from tb_landlord
+		where id = #{landlordId}
+	</select>
+	<select id="findLiquidateInfo" resultMap="findLiquidateInfoMap">
+		select * from tb_liquidate 
+		where liquidate_number in 
+		(select liquidate_number from tb_bill_liquidate where bill_number = #{billNumber})
+		<if test="liquidateType!=null">
+			and liquidate_type = #{liquidateType}
+		</if>
+	</select>
+	<resultMap type="com.tedu.duanzu.entity.LiquidateInfo" id="findLiquidateInfoMap">
+		<result property="orderNumber" column="order_number"/>
+		<association property="orderInfo" column="order_number" select="com.tedu.duanzu.Dao.BillDao.findOrderInfo"></association>
+	</resultMap>
+	<select id="findOrderInfo" resultType="com.tedu.duanzu.entity.OrderInfo">
+		select lodger,create_time,check_in_time,check_out_time 
+		from tb_order_item where order_num = #{order_number}
+	</select>
+</mapper>

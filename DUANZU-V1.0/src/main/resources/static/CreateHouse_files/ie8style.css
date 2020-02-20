@@ -1,0 +1,83 @@
+
+/* ie8 以下 版本提前信息 */
+.ie-tips {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 0px;
+    background-color: #ffffff;
+    z-index: 999;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 14px;
+    .font-16{font-size:16px;line-height:34px;}
+}
+.ie-tips .tips-up{
+    height: 63%;
+    padding:10px 0 0;
+}
+.tips-up .tip-image{
+
+  margin:0 auto;
+  margin-bottom:10px;
+}
+.tips-up .tip-browse{white-space: nowrap;}
+.tip-browse a{
+      margin: 30px 20px;
+      border: 1px solid #cccccc;
+      border-radius: 30px;
+      text-decoration: none;
+      display: inline-block;
+      padding: 15px 45px;
+      color: #000000;
+  }
+.tip-browse a:hover{border-color:red;color:red;text-decoration: none;}
+.tip-browse a span:first-child{
+	display: inline-block;
+    overflow: hidden;
+    background: url('/../static/ie8Style/img/ie_chrom.png');
+    width: 24px;
+    vertical-align: bottom;
+    height: 24px;
+    background-size: contain;
+}
+.tip-browse a:first-child span:first-child{background: url('/../static/ie8Style/img/ie_ie.png');}
+.tip-browse a:last-child span:first-child{background: url('/../static/ie8Style/img/ie_360.png');}
+
+
+
+
+.ie-tips .tips-down{
+    background-color: #f8f8f8;
+    height: 37%;
+    padding-top:45px;
+}
+.ie-tips .tips-down ul{
+      width: 38%;
+      margin: 0 auto;
+  }
+.ie-tips .tips-down li{
+        width:50%;float:left;
+    }
+.ie-tips .tips-down li p:first-child{    
+          border: 1px solid #dddddd;
+          width:130px;
+          height:130px;
+          padding: 10px;
+          background-color: #fff;
+          margin: 0 auto;
+}
+    
+.ie-tips .tips-down li .code-left span{
+	display:inline-block;
+	width:107px;
+	height:107px;
+}
+.ie-tips .tips-down li.code-right span{
+	display:inline-block;
+	width:107px;
+	height:107px;
+}
+.gray-font{color:#666666;} 

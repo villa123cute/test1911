@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tedu.duanzu.Dao.PriceDao">
+	<select id="findAllPrice" resultMap="findHousePrice">
+		select a.house_id,a.house_name,b.base_price,b.weekday_price,b.weekend_price,b.charging_mode 
+		from tb_house as a left join tb_house_price as b
+		on a.house_id = b.house_id
+		where a.landlord_id = #{landlordId}
+	</select>
+	<resultMap type="com.tedu.duanzu.entity.HousePrice" id="findHousePrice">
+		<id property="houseId" column="house_id"/>
+		<collection property="picPath" column="house_id" select="com.tedu.duanzu.Dao.PriceDao.findPic"></collection>
+		<collection property="prices" column="house_id" select="com.tedu.duanzu.Dao.PriceDao.findHolidayPrice"></collection>
+	</resultMap>
+	
+	<select id="findHolidayPrice" resultType="com.tedu.duanzu.entity.HolidayPrice">
+		select holiday_name,price 
+		from tb_holiday_price
+		where house_id = #{house_id}
+	</select>
+	<select id="findPic" resultType="String">
+		select picture_path from tb_house_picture
+		where house_id = #{house_id}
+	</select>
+	<update id="updatePrice" parameterType="com.tedu.duanzu.entity.HousePrice">
+		update tb_house_price set 
+		<if test="chargingMode==0">
+			base_price = #{basePrice},charging_mode = #{chargingMode}
+		</if>
+		<if test="chargingMode==1">
+			weekday_price = #{weekdayPrice},weekend_price = #{weekendPrice},charging_mode = #{chargingMode}
+		</if>
+		where house_id = #{houseId}
+	</update>
+</mapper>

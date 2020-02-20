@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>账单管理</title>
+    <script src="public/js/formatDate.js"></script>
+    <link rel="stylesheet" href="public/css/billManage.css"/>
+</head>
+<body>
+<div id="floor">
+    <div class="diva">
+        <div class="divb">
+            <span id="spa">账单管理</span>
+        </div>
+        <div class="divb" style="margin-bottom:3px"><hr style="border: 1px solid #e8e8ea"></hr></div>
+        <div class="divb">
+            <span>
+                <span>转账状态：</span>
+                <select class="selectStatus">
+                    <option value = "">全部</option>
+                    <option value = "1">已转账</option>
+                    <option value = "2">未转账</option>
+                    <option value = "3">转账失败</option>
+                </select>
+            </span>
+            <span style="float: right">
+                <button class="bua">查询</button>
+            </span>
+        </div>
+    </div>
+    <div class="diva">
+        <table class="billTable">
+       		<tr class="bill">
+                <th>账单号</th>
+                <th>账期</th>
+                <th>结算单总数</th>
+                <th>账单总额</th>
+                <th>佣金合计</th>
+                <th>收入合计</th>
+                <th>转账状态</th>
+            </tr>
+        </table>
+        <div id="pageId"></div>
+    </div>
+</div>
+	<script type="text/javascript">
+		var jsonData
+		$(function(){
+			var params = {landlordId:100001,status:$(".selectStatus").val(),pageCurrent:1};
+			$.getJSON("/bill/doFindBill",params,doShowBill);
+		});
+		$("#pageId").load("common/page.html");
+		$(".bua").on("click",function(){
+			var params = {landlordId:100001,status:$(".selectStatus").val(),pageCurrent:1};
+			$.getJSON("/bill/doFindBill",params,doShowBill);
+		});
+		function doShowBill(result){
+			$(".ableMove").remove();
+			if(result.state==0)alert(result.message);
+			if(result.data==null){
+				$(".rowCount").html("总记录数(0)");
+				$(".pageCount").html("总页数(0)");
+				$(".pageCurrent").html("当前页(0)");
+			}else{
+				var allRow = "";
+				jsonData = result.data.records;
+				for(var i = 0;i<jsonData.length;i++){
+					var showData = "<tr class='ableMove'><td><a class='toLiquidate' href ='#'>"+ jsonData[i].billNumber +"</a></td><td>"+ new Date(jsonData[i].billDate).Format('yyyy-MM-dd') +"</td><td>"+ jsonData[i].billAmount +"</td><td>"+ jsonData[i].money +"</td><td>"+ jsonData[i].brokerage +"</td><td>"+ jsonData[i].income +"</td><td>"+ jsonData[i].status +"</td></tr>";
+					allRow = allRow + showData;
+				}
+				$(".billTable").append(allRow);
+				doSetPagination(result.data);
+			}
+		}
+		function doGetObjects(){
+			var params = {landlordId:100001,status:$(".selectStatus").val(),pageCurrent:$("#pageId").data("pageCurrent")};
+			$.getJSON("/bill/doFindBill",params,doShowBill);
+		}
+		$(".billTable").on("click",".toLiquidate",function(){
+			$("#right").data("billItem",jsonData[$(this).parents(".ableMove").index()-1]);
+			$("#right").load("billItem.html");
+		});
+    </script>
+</body>
+</html>

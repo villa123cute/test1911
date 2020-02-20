@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>修改价格</title>
+    <link rel="stylesheet" href="public/css/modifyPrice.css"/>
+</head>
+<body>
+<div id="floor">
+    <div class="diva">
+        <div class="divb">
+            <span id="spa">账单管理</span>
+        </div>
+        <div class="divb"><hr style="border: 1px solid #e8e8ea"></hr></div>
+        <div class="divb">
+            <div class="divc">
+                <h4>基础价</h4>
+                <p>基础价是基本售卖价格，长期有效，如果您在房态日历中修改了特定日期的价格，则特定日期之外的所有日期按照此价格售卖</p>
+            </div>
+            <div class="divc">
+                <h4>售卖币种</h4>
+                <select disabled="disabled">
+                    <option>人民币</option>
+                </select>
+                <p>国内房屋只能通过人民币售卖，不可更改</p>
+            </div>
+            <div class="divc">
+                <h4>售卖方式</h4>
+                <button class="bub identical" value = "0">每周同价</button>
+                <button class="bub difference" value = "1">周中、周末不同价</button>
+            </div>
+            <form>
+            <div class="divd" style="overflow:hidden">
+                <h4>售卖价格</h4>
+                <span>基础价：</span><input id="base"></input><span>元</span>
+                <span style="float: right">
+                    <button type="button" class="bua base">保存</button>
+                </span>
+            </div>
+            <div class="dive" style="overflow:hidden">
+                <h4>售卖价格</h4>
+                <span>周中价：</span><input id="weekday"></input><span>元</span>
+                <br/><br/>
+                <span>周末价：</span><input id="weekend"></input><span>元</span>
+                <span style="float: right">
+                    <button type="button" class="bua week">保存</button>
+                </span>
+            </div>
+            </form>
+            <!-- 
+            <div class="divb"><hr style="border: 1px solid #e8e8ea"></hr></div>
+            <div style="overflow:hidden">
+                <span style="float: right">
+                    <button class="bua">保存</button>
+                </span>
+            </div> 
+             -->
+        </div>
+    </div>
+</div>
+<script>
+    $(".identical").on("click",function(){
+        $(this).css({"color":"#6e80e3","border-color":"#6e80e3"});
+        $(".bub").removeAttr("id");
+        $(this).attr("id","priceType");
+        $(".dive").css("display","none");
+        $(".divd").css("display","block");
+        $(".difference").css({"color":"black","border-color":"#e8e8ea"});
+    });
+    $(".difference").on("click",function(){
+        $(this).css({"color":"#6e80e3","border-color":"#6e80e3"});
+        $(".bub").removeAttr("id");
+        $(this).attr("id","priceType");
+        $(".dive").css("display","block");
+        $(".divd").css("display","none");
+        $(".identical").css({"color":"black","border-color":"#e8e8ea"});
+    });
+    
+    var data = $("#right").data("value");
+	console.log($("#right").data("value"));
+	if(data.chargingMode==0){
+		$('.identical').click();
+	}else{
+		$('.difference').click();
+	}
+	$("#base").val(data.basePrice);
+	$("#weekday").val(data.weekdayPrice);
+	$("#weekend").val(data.weekendPrice);
+    
+    $(".bua").on("click",function(){
+    	$.post("/price/doUpdatePrice",doGetParams(),function(result){
+    		if (result.state == 1) {
+				alert(result.message);
+				$("#right").load("priceControl.html");
+			} else {
+				alert(result.message);
+			}
+    	});
+    });
+    
+    var doGetParams = function(){
+    	var params = {houseId : data.houseId,basePrice : $("#base").val(),weekdayPrice : $("#weekday").val(),weekendPrice : $("#weekend").val(),chargingMode : $("#priceType").val()};
+    	console.log(params);
+    	return params;
+    }
+</script>
+</body>
+</html>

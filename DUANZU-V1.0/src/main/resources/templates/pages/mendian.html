@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<style type="text/css">
+form {
+	width: 1000px;
+}
+
+li {
+	list-style: none;
+}
+
+tr {
+	line-height: 30px;
+}
+
+button {
+	border: 1px solid #999999;
+	background-color: white;
+}
+</style>
+</head>
+<body>
+	<h3>门店设置</h3>
+	<hr>
+	<p>
+		<span style="background-color: #0070A9; width: 10px;">&nbsp;</span>门店信息
+	</p>
+	<div>
+		<form action="landlord/fileUpload" method="post"
+			enctype="multipart/form-data" id="fileUploadForm">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					房东头像
+					<font color="orange">*</font>
+					<th><label>上传图片</label> <input id="LandlordPath" type="file"
+						name="files" /></th>
+					<td>
+						<ul>
+							<li style="font-size: 12px; color: #999999;">上传要求：</li>
+							<li style="font-size: 12px; color: #999999;">1.请上传真实头像或营业执照也可上传品牌logo</li>
+							<li style="font-size: 12px; color: #999999;">2.请上传2m以内的png,jep,jepg,gif格式的文件</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<td>房东昵称<font color="orange">*</font><font size="1"
+						color="#999999">客人可通过快速搜索查询到你店</font></td>
+				</tr>
+				<tr>
+					<td><input type="text" id="nickname" name="nickname" style="width: 250px"><font
+						color="orange" size="1">怎么取一个好名称</font></td>
+				</tr>
+
+				<tr>
+					<td>地区/城市<font color="orange">*</font><font size="1"
+						color="#999999">*</font></td>
+				</tr>
+				<tr>
+					<td><select id="houseArea" name="houseArea">
+							<option value="中国大陆">中国大陆</option>
+							<option value="海外地区">海外地区</option>
+					</select>&nbsp;&nbsp;&nbsp;&nbsp; <input id="houseCity" type="text" name="houseCity"
+						placeholder="北京市/北京/朝阳市"><font color="orange" size="1">请按内部格式填写</font></td>
+				</tr>
+
+				<tr>
+					<td>欢迎语<font color="orange">*</font><font size="1"
+						color="#999999">一句您对客人的欢迎语</font></td>
+				</tr>
+				<tr>
+					<td><input id="welcoming" type="text" name="welcoming" style="width: 300px;"
+						placeholder="午后阳光，夜晚繁星，遇到的你也算风景"></td>
+				</tr>
+
+				<tr>
+					<td>介绍</td>
+				</tr>
+				<tr>
+					<td><textarea id="introduce" ows="5" name="introduce" style="width: 300px"></textarea></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td><span style="background-color: #0070A9; width: 10px;">&nbsp;</span><font
+						size="4">经营信息</font></td>
+				</tr>
+				<tr>
+					<td>是否接待外宾</td>
+				</tr>
+				<tr>
+					<td><label><input id="receiveForeignGuests" name="receiveForeignGuests"
+							type="radio" value="0" checked="checked" />是 </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<label><input name="receiveForeignGuests" type="radio" value="1" />否 </label></td>
+				</tr>
+				<tr>
+					<td>接待语言</td>
+				</tr>
+				<tr>
+					<td><label><input id="receiveLanguage" name="receiveLanguage" type="checkbox" value="0" />英文</label>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<label><input name="receiveLanguage" type="checkbox" value="1" />中文</label></td>
+				</tr>
+				<tr>
+					<td>是否提供发票</td>
+				</tr>
+				<tr>
+					<td><label><input id="invoice" name="invoice"
+							type="radio" value="0" checked="checked">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<label><input name="invoice" type="radio" value="1">否</td>
+				</tr>
+				<tr>
+					<td>信用免押金</td>
+				</tr>
+				<tr>
+					<td><label><input id="creditDepositFree" name="creditDepositFree"
+							type="radio" checked="checked" value="0">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<label><input name="creditDepositFree" type="radio" value="1">否</label></td>
+				</tr>
+				<tr>
+					<td>是否接待失信房客</td>
+				</tr>
+				<tr>
+					<td><label><input id="dishonestTenant" name="dishonestTenant"
+							type="radio" checked="checked" value="0">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<label><input name="dishonestTenant" type="radio"
+							value="1">否</label></td>
+				</tr>
+				<tr>
+					<td>是否有前台</td>
+				</tr>
+				<tr>
+					<td><label><input id="stage" name="stage" type="radio"
+							checked="checked" value="0">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<label><input name="stage" type="radio" value="1">否</label></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td><span style="background-color: #0070A9; width: 10px;">&nbsp;</span><font
+						size="4">联系方式</font></td>
+				</tr>
+				<tr>
+					<td>联系电话<font color="orange">*</font></td>
+				</tr>
+				<tr>
+					<td><input id="masterNumber" name="masterNumber" type="text" style="width: 250px"></td>
+				</tr>
+				<tr>
+					<td>接听时间<font color="orange">*</font></td>
+				</tr>
+				<tr>
+					<td><input id="startTime" name="startTime" type="time" ontimeerror="" /> 至<input
+						id="endTime" name="endTime" type="time" ontimeerror="" /></td>
+				</tr>
+				<tr>
+					<td>运营电话<font color="orange">*</font></td>
+				</tr>
+				<tr>
+					<td><input id="customerNumber" type="text" name="customerNumber"
+						style="width: 100px" placeholder="123344542">&nbsp;&nbsp;&nbsp;
+
+						<input id="serviceWork" name="serviceWork" type="text" style="width: 250px"
+						placeholder="全部职能">&nbsp;&nbsp;
+						<button>
+							<font color="dodgerblue">编辑</font>
+						</button></td>
+				</tr>
+				<tr>
+					<td><button>
+							<font id="serviceNumber" name="serviceNumber" color="dodgerblue"> + 添加运营电话</font>
+						</button></td>
+				</tr>
+				<tr>
+					<td>运营邮箱<fon color="orange">*</font></td>
+				</tr>
+				<tr>
+					<td><input id="serviceEmail" name="serviceEmail" type="text" style="width: 250px"></td>
+				</tr>
+				<hr>
+				<tr>
+					<td style="float: right;">
+					<input type="submit" id="submitButton"  value="保存" 
+						style="background-color: #0088CC; color: white; border: none;"></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<script type="text/javascript">
+	$(function(){
+		$("#submitButton").click(function(event) {
+			 // Stop default form Submit.
+			 event.preventDefault();
+			// Call Ajax Submit.
+			 ajaxSubmitForm();
+				});
+			   });
+			 
+			function ajaxSubmitForm() {
+			    // Get form
+			var form = $('#fileUploadForm')[0];  
+			var data = new FormData(form);
+			    console.log(data)
+			$("#submitButton").prop("disabled", true);
+			$.ajax({
+				type: "POST",
+				enctype: 'multipart/form-data',
+				url: "/landlord/fileUpload",
+				data: data,
+				 // prevent jQuery from automatically transforming the data into a query string
+				processData: false,
+				contentType: false,
+				cache: false,
+				timeout: 1000000,
+				success: function(data, textStatus, jqXHR) {
+					if(data.state == 1){
+					alert("信息上传成功，请耐心等待平台审核！")
+					location.href = "/index1";
+					}
+			       	 },
+			        
+				error: function(jqXHR, textStatus, errorThrown) {  
+					$("#result").html(jqXHR.responseText);
+			            
+					console.log("ERROR : ", jqXHR.responseText);
+					$("#submitButton").prop("disabled", false);
+				}
+			    
+			   });
+			}
+	
+	</script>
+</body>
+</html>

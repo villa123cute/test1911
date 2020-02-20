@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="public/css/dingdan.css"></link>
+<link rel="stylesheet" href="public/css/table.css"></link>
+ 
+
+</head>
+<body>
+<div id="main">
+	<div class="diva"><span id="spa">订单管理</span></div>
+	<div class="diva"><hr style="border: 1px solid #e8e8ea"/></div>
+	<div class="diva" id="dingdanhead">
+		<ul>
+			<li id="doall" class="orderList">全部</li>
+			<li id="dodaifuUI" class="orderList">待支付</li>
+			<li id="dodaiokUI" class="orderList">待确认</li>
+			<li id="dodaizhuUI" class="orderList">待入住</li>
+			<li id="doyizhuUI" class="orderList">已入住</li>
+			<li id="doyiokUI" class="orderList">已离店</li>
+			<li id="doyinoUI" class="orderList">已取消</li>
+			<select id="selectId">
+				<option selected="selected">入住人</option>
+				<option>订单号</option>
+				<option>入住日期</option>
+				<option>下单日期</option>
+			</select>
+			<li  class="orderList orderListright" cursor="pointer"><button>搜索</button></li>
+			<li class="orderList orderListright"><input class="input" type="text"/></li>				
+		</ul>
+	</div>
+	<div class="diva2">
+		<table id="allding"></table>
+	</div>
+	<div id="pageId">
+		
+	</div>
+</div>
+<script type=text/javascript>
+	$(function(){
+		debugger
+		const pageUI="dingdan/pageUI" 
+		$("#pageId").load(pageUI,doGetAll);
+		$("#dingdanhead").on("click","#doall,#dodaifuUI,#dodaiokUI,#dodaizhuUI,#doyizhuUI,#doyiokUI,#doyinoUI",dodingdanUI);
+		
+	})
+	function dodingdanUI(){
+		debugger
+		 var cls=$(this).prop("id");
+		 if(cls=="doall"){
+			 doGetAll();
+		 }else if(cls=="dodaifuUI"){
+			 dodaifuUI();
+		 }else if(cls=="dodaiokUI"||cls=="doyinoUI"){
+			 dodaiokUI(cls);
+		 }else if(cls=="dodaizhuUI"||cls=="doyizhuUI"||cls=="doyiokUI"){
+			dostatusUI(cls);
+		 }else{}
+	}
+	function  dodaifuUI(){
+		debugger
+		var params={"landlordId":1,"tradeStatus":0,"pageCurrent":1};
+		//交易状态未支付查询
+		var url="dingdan/doFindOkOrNo";
+		$.getJSON(url,params,dotradestatusResult);
+	}
+	function dotradestatusResult(result){
+		debugger
+		console.log(result)
+		if (result.state == 1) {
+			  doSettradestatusRows(result.data.records);
+			  doSetPagination(result.data)
+		  } else {
+		   alert(result.message);
+		  }
+		 }
+	function doSettradestatusRows(records){
+		debugger
+		var table=$("#allding");
+	    table.empty();
+	    for(var i=0;i<records.length;i++){
+	     var tbody=$("<tbody></tbody>");
+	     var ths = doCreateThs(records[i]);
+	     var tds = doCreateTds(records[i]);  
+	     table.append(ths);
+	     tbody.append(tds);
+	     table.append(tbody);
+	    }
+	 }
+	function doCreateBrowseTds(row) {
+		debugger
+		  var tds = "<td rowspan='4'>< img src='"+row.picture+"' id='img'></td>"
+		    + "<td rowspan='4' colspan='3'><a href=''>"+"订单详情"+"</a><br>可住"+row.livePerson+"人<br><br><input type='text' value='"+row.address+"'/></td>"
+		    + "<td rowspan='4'>￥<input id='liveprice' type='text' value='"+row.price+"'/>/晚</td>"
+		  return tds;
+		 }
+	function doCreateThs(row) {
+		debugger
+		  var ths="<th class='width-40'>"+"订单号:"+row.orderId+"</th>"
+		  +"<th class='width-70'></th>"
+		  +"<th class='width-50' colspan='2'>下单时间:"+row.createTime+"</th>"
+		  +"<th class='width-50' colspan='2'>待支付</th>";  
+		  return ths;  
+		 }
+		 /* <fmt:formatDate value="${order.orderTime}" pattern="yyyy/MM/dd HH:mm:ss"/> */
+	function doCreateTds(row) {
+		debugger
+		  //console.log(1234556)
+		  var tds1 = "<td rowspan='4'><img src='"+row.picturePath+"' id='img'></td>"
+		    + "<td rowspan='4'><a href=''/>房客  : "+row.lodger+"</a><br>入住人数  :  "+row.lodgerNumber+"<br>状态  :  "+row.status+"</td><br>"
+		    + "<td rowspan='4'>房屋名称:"+row.houseName+"<br>入住时间:<br>"+row.CheckInTime+"</td>"
+		    +"<td rowspan='4'>订单总额："+row.grossPrice+"元<br>退房时间<br>"+row.CheckOutTime+"</td>"
+		    + "<td rowspan='4'><br><br></td>"
+		  	+"<td rowspan='4'></td>"
+		 return tds1;
+		 }
+	
+	
+	
+	//入住信息
+	function dostatusUI(cls){
+		debugger
+		
+		if(cls=="dodaizhuUI"){
+			var params={"landlordId":1,"status":1,"pageCurrent":1};
+		}else if(cls=="doyizhuUI"){
+			var params={"landlordId":1,"status":2,"pageCurrent":1};
+		}else if(cls=="doyiokUI"){
+			var params={"landlordId":1,"status":3,"pageCurrent":1};
+		}else{}
+		//入住状态status
+		var url="dingdan/doFindStatus";
+		$.getJSON(url,params,dostatusResult);
+	}
+	
+	function dostatusResult(result){
+		debugger
+		if (result.state == 1) {
+			  doSetstatusRows(result.data.records);
+			  doSetPagination(result.data);
+		  } else {
+		   alert(result.message);
+		  }
+		 }
+	function doSetstatusRows(records){
+		debugger
+		 var table=$("#allding");
+		    table.empty();
+		    for(var i=0;i<records.length;i++){
+		     var tbody=$("<tbody></tbody>");
+		     var ths = doCreateThs(records[i]);
+		     var tds = doCreateTds(records[i]);  
+		     table.append(ths);
+		     tbody.append(tds);
+		     table.append(tbody);
+		    }
+		 }
+	function doCreateBrowseTds(row) {
+		  var tds = "<td rowspan='4'>< img src='"+row.picture+"' id='img'></td>"
+		    + "<td rowspan='4' colspan='3'><a href=''>"+"订单详情"+"</a><br>可住"+row.livePerson+"人<br><br><input type='text' value='"+row.address+"'/></td>"
+		    + "<td rowspan='4'>￥<input id='liveprice' type='text' value='"+row.price+"'/>/晚</td>"
+		  return tds;
+		 }
+	function doCreateThs(row) {
+		  var ths="<th class='width-40'>"+"订单号:"+row.orderId+"</th>"
+		  +"<th class='width-70'></th>"
+		  +"<th class='width-50' colspan='2'>下单时间:"+row.createTime+"</th>"
+		  +"<th class='width-50' colspan='2'>29:56秒后自动取消</th>";  
+		  return ths;  
+		 }
+		 /* <fmt:formatDate value="${order.orderTime}" pattern="yyyy/MM/dd HH:mm:ss"/> */
+	function doCreateTds(row) {
+		  //console.log(1234556)
+		  var tds1 = "<td rowspan='4'><img src='"+row.picturePath+"' id='img'></td>"
+		    + "<td rowspan='4'><a href=''/>房客  : "+row.lodger+"</a><br>入住人数  :  "+row.lodgerNumber+"<br>状态  :  "+row.status+"</td><br>"
+		    + "<td rowspan='4'>房屋名称:"+row.houseName+"<br>入住时间:<br>"+row.CheckInTime+"</td>"
+		    +"<td rowspan='4'>订单总额："+row.grossPrice+"元<br>退房时间<br>"+row.CheckOutTime+"</td>"
+		    + "<td rowspan='4'><br><br></td>"
+		  	+"<td rowspan='4'></td>"
+		 return tds1;
+		 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//aff
+	function  dodaiokUI(cls){
+		debugger
+		
+		if(cls=="dodaiokUI"){
+			var params={"landlordId":1,"affirmCancel":2,"pageCurrent":1};
+		}else if(cls=="doyinoUI"){
+			var params={"landlordId":1,"affirmCancel":3,"pageCurrent":1};
+		}else{}
+		//等待确认查询,affirmcanel
+		var url="dingdan/doFindAffirm";
+		$.getJSON(url,params,doOkOrNoResult);
+	}
+	function doOkOrNoResult(result){
+		debugger
+		  if (result.state == 1) {
+			  doSetOkOrNoRows(result.data.records);
+			  doSetPagination(result.data);
+		  } else {
+			  noData(result.message);
+		   
+		  }
+		 }
+	function noData(data){
+		debugger
+		 var table=$("#allding")
+		 table.empty();
+		 var h1=$("<h1></h1>");
+		 h1.html("没有数据.......")
+		 table.append(h1);
+	}
+	function doSetOkOrNoRows(records){
+		debugger
+		 var table=$("#allding");
+		    table.empty();
+		    for(var i=0;i<records.length;i++){
+		     var tbody=$("<tbody></tbody>");
+		     var ths = doCreateThs(records[i]);
+		     var tds = doCreateTds(records[i]);  
+		     table.append(ths);
+		     tbody.append(tds);
+		     table.append(tbody);
+		    }
+		 }
+	function doCreateBrowseTds(row) {
+		  var tds = "<td rowspan='4'>< img src='"+row.picture+"' id='img'></td>"
+		    + "<td rowspan='4' colspan='3'><a href=''>"+"订单详情"+"</a><br>可住"+row.livePerson+"人<br><br><input type='text' value='"+row.address+"'/></td>"
+		    + "<td rowspan='4'>￥<input id='liveprice' type='text' value='"+row.price+"'/>/晚</td>"
+		  return tds;
+		 }
+	function doCreateThs(row) {
+		  var ths="<th class='width-40'>"+"订单号:"+row.orderId+"</th>"
+		  +"<th class='width-70'></th>"
+		  +"<th class='width-50' colspan='2'>下单时间:"+row.createTime+"</th>"
+		  +"<th class='width-50' colspan='2'>29:56秒后自动取消</th>";  
+		  return ths;  
+		 }
+		 /* <fmt:formatDate value="${order.orderTime}" pattern="yyyy/MM/dd HH:mm:ss"/> */
+	function doCreateTds(row) {
+		  //console.log(1234556)
+		  var tds1 = "<td rowspan='4'><img src='"+row.picturePath+"' id='img'></td>"
+		    + "<td rowspan='4'><a href=''/>房客  : "+row.lodger+"</a><br>入住人数  :  "+row.lodgerNumber+"<br>状态  :  "+row.status+"</td><br>"
+		    + "<td rowspan='4'>房屋名称:"+row.houseName+"<br>入住时间:<br>"+row.CheckInTime+"</td>"
+		    +"<td rowspan='4'>订单总额："+row.grossPrice+"元<br>退房时间<br>"+row.CheckOutTime+"</td>"
+		    + "<td rowspan='4'><br><br></td>"
+		  	+"<td rowspan='4'><br><button>"+row.affirmCancel+"</button></td>"
+		 return tds1;
+		 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function doGetAll(){
+		debugger
+		var pageCurrent=$("#allding").data("pageCurrent");
+		if(!pageCurrent)pageCurrent=1;
+		//全部订单查询
+		var url="dingdan/doFindAll";
+		var params={"landlordId":1,"pageCurrent":pageCurrent};
+		
+		$.getJSON(url,params,doHandleResponseResult);
+	}
+	
+	function doHandleResponseResult(result){
+		  if (result.state == 1) {
+			  doSetTableBodyRows(result.data.records);
+			  doSetPagination(result.data)
+		  } else {
+		   alert(result.message);
+		  }
+		 }
+	function doSetTableBodyRows(records) {
+		debugger
+		  var table=$("#allding");
+		    table.empty();
+		    for(var i=0;i<records.length;i++){
+		     var tbody=$("<tbody></tbody>");
+		     var ths = doCreateThs(records[i]);
+		     var tds = doCreateTds(records[i]);  
+		     table.append(ths);
+		     tbody.append(tds);
+		     table.append(tbody);
+		    }
+		 }
+	function doCreateBrowseTds(row) {
+		  var tds = "<td rowspan='4'>< img src='"+row.picture+"' id='img'></td>"
+		    + "<td rowspan='4' colspan='3'><a href=''>"+"订单详情"+"</a><br>可住"+row.livePerson+"人<br><br><input type='text' value='"+row.address+"'/></td>"
+		    + "<td rowspan='4'>￥<input id='liveprice' type='text' value='"+row.price+"'/>/晚</td>"
+		  return tds;
+		 }
+	function doCreateThs(row) {
+		  var ths="<th class='width-40'>"+"订单号:"+row.orderId+"</th>"
+		  +"<th class='width-70'></th>"
+		  +"<th class='width-50' colspan='2'>下单时间:"+row.createTime+"</th>"
+		  +"<th class='width-50' colspan='2'>29:56秒后自动取消</th>";  
+		  return ths;  
+		 }
+		 /* <fmt:formatDate value="${order.orderTime}" pattern="yyyy/MM/dd HH:mm:ss"/> */
+	function doCreateTds(row) {
+		  //console.log(1234556)
+		  var tds1 = "<td rowspan='4'><img src='"+row.picturePath+"' id='img'></td>"
+		    + "<td rowspan='4'><a href=''/>房客  : "+row.lodger+"</a><br>入住人数  :  "+row.lodgerNumber+"<br>状态  :  "+row.status+"</td><br>"
+		    + "<td rowspan='4'>房屋名称:"+row.houseName+"<br>入住时间:<br>"+row.CheckInTime+"</td>"
+		    +"<td rowspan='4'>订单总额："+row.grossPrice+"元<br>退房时间<br>"+row.CheckOutTime+"</td>"
+		    + "<td rowspan='4'><br><br></td>"
+		  	+"<td rowspan='4'><br><button>"+row.affirmCancel+"</button></td>"
+		 return tds1;
+		 }
+</script>
+</body>
+</html>

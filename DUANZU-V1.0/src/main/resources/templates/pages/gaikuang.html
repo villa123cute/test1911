@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<style type="text/css">
+	#vv {
+		border: 1px solid #999999;
+		width: 900px;
+		height: 900px;
+	}
+	
+	#vv p a {
+		text-decoration: none;
+		color: black;
+	}
+	
+	#vv p a:hover {
+		color: cornflowerblue;
+	}
+	
+	#vv iframe {
+		width: 900px;
+		height: 800px;
+	}
+	.gaikuangHr{
+		width: 900px;
+	}
+	.gaikuangBody{
+		width: 1000px;
+	}
+	.gaikuangP{
+		width: 900px;
+	}
+</style>
+</head>
+<body class="gaikuangBody">
+	<p class="gaikuangP">经营概况</p>
+	<hr class="gaikuangHr"/>
+	<br />
+	<div id="vv">
+		<p>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="gaikuang">概况</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a class="tongji">房屋统计</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="date" id="payTime" /> <input type="date" id="payTime2" />
+			<button class="cx">查询</button>
+		</p>
+		<div class="gk"></div>
+	</div>
+	<script type="text/javascript">
+	
+		$(function(){
+				
+				$(".gk").load("gk/gaik.html",shuJuJiaZai);
+				//点击加载页面
+				$("#gaikuang").click(gkym);
+				$(".tongji").click(tjym);
+				//点击查询,数据加载
+				$(".cx").click(shuJuJiaZai);
+				var date=new Date();
+				var year=date.getFullYear(); //获取当前年份
+				var mon=date.getMonth()+1; //获取当前月份
+				var da=date.getDate(); //获取当前日
+				var mytime=year+"-"+mon+"-"+da;
+				$("#payTime2").val(mytime);
+				var da3=date.getDate()-12;
+				
+				var mytime2=year+"-"+mon+"-"+da3;
+				$("#payTime").val(mytime2);
+				data = new Array();
+				for(var i=12;i>0;i--){
+					data.push(year+"-"+mon+"-"+(date.getDate()-i));
+				}
+				//拒单率
+				income = new Array();
+				for(var i=12;i>0;i--){
+				    var random =Math.random()*6;
+				    income.push(random);
+				}
+				//入住率
+				income2 = new Array();
+				for(var i=12;i>0;i--){
+				    var random2 =Math.random()*5;
+				    income2.push(random2);
+				}
+				
+		})
+		function gkym(){
+			$(".gk").load("gk/gaik.html",shuJuJiaZai);
+		}
+		function tjym(){
+			$(".gk").load("gk/tongji.html");
+		}
+		//数据加载
+		function shuJuJiaZai(){
+			
+			//请求参数
+			//获取查询参数"页面输入时间段"
+			var payTime = $("#payTime").val();
+			var payTime2 = $("#payTime2").val();
+			var params={
+					"payTime":payTime,
+					"payTime2":payTime2
+			}
+			//请求的url
+			var url = "/aaa";
+			$.getJSON(url,params,doHandleResponseResult);
+			$.getJSON("/bbb",params,doHandleResponseResult2);
+		}
+		//拒单率
+		function doHandleResponseResult2(result){
+			if(result.state=1){
+				var zongJingEr = $("#JDL");
+				zongJingEr.empty();//清空内容
+				//拒单率
+				var JDL=Number(result.data*100).toFixed();
+				//显示拒单率
+				$("#JDL").html(JDL+"%");
+			}
+		}
+		//响应结果处理
+		function doHandleResponseResult(result){
+			console.log(result)
+			if(result.state=1){
+				//初始化页面数据
+			    doSetTableBodyRows(result.data);//records
+			   
+			   	
+			    }
+			}
+	
+		function doSetTableBodyRows(data){
+		
+			var zongJingEr = $("#zongJingEr");
+			zongJingEr.empty();//清空内容
+			//迭代数据到页面
+			//总金额
+			var sum=0;
+			for(var i=0;i<data.length;i++){
+				var grossPrice = data[i].grossPrice;
+				
+				sum+=grossPrice;
+			}
+			//显示总金额到页面
+			$("#zongJingEr").html(sum+"元");
+			
+			var yeJian = $("#yeJian");
+			yeJian.empty();
+			var day=0;
+			for(var i=0;i<data.length;i++){
+				var reservationDay=data[i].reservationDay;				
+				console.log(reservationDay);
+				day+=reservationDay;
+			}
+			//显示实住间夜
+			$("#yeJian").html(day+"晚");
+			
+			var yeJian = $("#haha");
+			yeJian.empty();
+			var nv=0;
+			for(var i=0;i<data.length;i++){
+				var lodgerNumber=data[i].lodgerNumber;				
+				nv+=lodgerNumber;			
+			}
+			//显示入住率到页面
+			$("#haha").html(nv+"%");
+			
+		} 
+		
+		
+		</script>
+
+</body>
+</html>

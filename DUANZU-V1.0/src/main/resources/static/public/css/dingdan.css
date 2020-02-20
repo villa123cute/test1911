@@ -1,0 +1,105 @@
+#bt {
+	width:950px;
+	height:100%;
+}
+
+#spa{
+	font-size: 20px;
+	line-height: 30px;
+    font-weight: bold;
+}
+
+.input{
+	padding:4px 10px;
+	border: 2px solid #e8e8ea;
+}
+
+button{
+	padding: 3px 10px;
+    color: white;
+    background-color: #6e80e3;
+    border-color: #6e80e3;
+}
+
+.diva{
+	padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 950px;
+}
+.diva{
+	padding-top: 50px;
+    padding-bottom: 50px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 950px;
+}
+
+.orderList{
+	float:left;
+	list-style-type:none;
+	padding: 5px 10px;
+}
+
+.orderListright{
+	float:right;
+	list-style-type:none;
+	padding: 5px 10px;
+}
+
+#dingdanhead{
+	overflow:hidden;
+	margin-right: auto;
+    margin-left: auto;
+	cursor: pointer;
+}
+
+
+.input{
+	padding:4px 10px;
+	border: 2px solid #e8e8ea;
+}
+
+button{
+	padding: 3px 10px;
+    color: white;
+    background-color: #6e80e3;
+    border-color: #6e80e3;
+}
+
+.diva{
+	padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right: auto;
+    margin-left: 10px;
+    width: 950px;
+}
+
+.orderList{
+	float:left;
+	list-style-type:none;
+	padding: 5px 10px;
+}
+
+.orderListright{
+	float:right;
+	list-style-type:none;
+	padding: 5px 10px;
+	
+}
+
+#main{
+	overftext-alignlow:hidden;
+	padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px 0 rgba(63,63,68,.15);
+}
+
+#dingdanhead{
+	overflow:hidden;
+	 margin-right: 0px;
+    margin-left: auto;
+}
+#pageUI{
+	cursor: pointer;}

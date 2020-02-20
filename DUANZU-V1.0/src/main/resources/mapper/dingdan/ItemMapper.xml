@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tedu.duanzu.Dao.TbOrderItemDao">
+	<select id="findDingDans" resultMap="findDingDan">
+		select * 
+		from tb_order_item
+		where landlord_id=#{landlordId}
+		limit #{startIndex},#{pageSize};
+	</select>
+	
+	<select id="findName" resultType="String">
+	select house_name from tb_house where house_id=#{houseId}
+	</select>
+	<select id="findPic" resultType="String">
+		select picture_path from tb_house_picture where house_id=#{houseId}
+	</select>
+	
+	<select id="findStatus" resultMap="findDingDan">
+		select * from tb_order_item
+		where landlord_id=#{landlordId} and affirm_cancel=#{affirmCancel}
+		limit #{startIndex},#{pageSize};
+	</select>
+	
+	<select id="findByStatus" resultMap="findDingDan">
+		select * 
+		from tb_order_item
+		where landlord_id=#{landlordId} and status=#{status}
+		limit #{startIndex},#{pageSize};
+	</select>
+
+	<select id="findBytrade" resultMap="findDingDan">
+		select * 
+		from tb_order_item
+		where landlord_id=#{landlordId} and trade_status=#{tradeStatus}
+	</select>
+	<resultMap type="com.tedu.duanzu.entity.OrderItem" id="findDingDan">
+		<id property="houseId" column="house_id"/>
+		<association property="houseName" column="house_id" 
+				select="com.tedu.duanzu.Dao.TbOrderItemDao.findName">
+		</association>
+		<collection property="picturePath" column="house_id"
+				select="com.tedu.duanzu.Dao.TbOrderItemDao.findPic">
+		</collection>
+	</resultMap>
+
+<select id="findById2" resultType="int">
+		select count(*) from tb_order_item where landlord_id=#{landlordId}; 
+	</select>
+	
+
+</mapper>

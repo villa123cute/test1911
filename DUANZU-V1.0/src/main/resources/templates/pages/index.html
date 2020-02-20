@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Full Layout - jQuery EasyUI Demo</title>
+	<script type="text/javascript" lang="java">
+		function func(ob){
+			var myFrame="MainFrame"+obj.value;
+			window.open(obj.title.myFrame);
+		}
+	</script>
+	<style type="text/css">
+		body{
+			width: 1500px;
+		}
+		li{
+			list-style: none;
+		}
+		a{
+			text-decoration: none;
+		}
+		#head{
+			width:1800px;
+			height: 50px;
+			text-align: center;
+			background-color: #00438A;
+			
+		}
+		#head ul{
+			margin:0 15%;
+			float: left;
+			overflow: hidden;
+		}
+		#head ul li{
+			width:100px;
+			color: white;
+			float: left;
+			margin-top: 10px;
+		}
+		#head ul li ul{
+			float: left;
+			display: none;
+			
+		}
+		#head ul li a{
+			color: white;
+		}
+		#head ul li:hover ul{
+			display: block;
+		}
+		#head ul li.menuList{
+			position: relative;
+		}
+		#head ul li.menuList ul{
+			position: relative;
+			left: -60px;
+			width:100px;
+			text-align: center;
+			margin-top: 10px;
+		}
+		#head ul li.menuList ul li{
+			line-height: 10px;
+			
+		}
+		#head ul li.menuList ul li a{
+			color: black;
+		}
+		#main{
+			width:1500px;
+			height:900px;
+			margin:0 15%;
+			margin-top:50px;
+			position: absolute;
+			
+		}
+		#main div{
+			float: left;
+			
+		}
+		#left{
+			width:200px;
+			height:1000px;
+			
+		} 
+		#left>ul{
+			text-align: center;
+			border:2px solid #666666;
+		}
+		#left>ul>li{
+			width: 200px;
+			background-color:#575765;
+			line-height:50px;
+			position: relative;
+			right: 50px;
+		}
+		#left>ul>li>ul{
+			width: 200px;
+			line-height:50px;
+			position: relative;
+			right: 40px;
+		}
+		#left>ul>li>ul>li{
+			background-color:white;
+		}
+		#left ul li a{
+			color:black;
+			font-weight: bold;
+		}
+		#right iframe{
+			float: none;
+			width:1200px;
+			margin-top: 10px;
+			height: 1000px;
+		}
+		
+	</style>
+</head>
+<body>
+	<div id="head">
+		<ul>
+			<li>duanzu</li>
+		</ul>
+		<ul>
+			<li class="menuList">电话号码
+			<ul>
+				<li><a href="#" >个人信息</a></li>
+				<li><a href="#" >修改信息</a></li>
+				<li><a href="#" >切换到游客</a></li>
+				<li><a href="#" >退出</a></li>
+			</ul>
+			</li>
+			<li class="menuList">结算管理
+			<ul>
+				<li><a onclick="func(this)" href="fangtai.html" target="MainFrame">账单管理</a></li>
+				<li><a onclick="func(this)" href="jiesuanc.html" target="MainFrame">结算查询</a></li>
+				<li><a onclick="func(this)" href="jiesuans.html" target="MainFrame">结算设置</a></li>
+			</ul>
+			</li>
+			<li class="menuList">商家管理
+			<ul>
+				<li><a onclick="func(this)" href="#">商家信息</a></li>
+				<li><a onclick="func(this)" target="MainFrame" href="tixing.html">提醒设置</a></li>
+				<li><a onclick="func(this)" href="#">权限管理</a></li>
+			</ul>
+			</li>
+			<li><a href="#">房东指引</a></li>
+		</ul>
+	</div>
+	<br />
+	<br />
+	<div id="main">
+		<div id="left">
+			<ul>
+            <li>
+                <a>交易管理</a>
+                <ul>
+                    <li><a onclick="func(this)" href="dingdan.html" target="MainFrame" >订单管理</a></li>
+                    <li><a onclick="func(this)" href="pinglun.html" target="MainFrame">点评管理</a></li>
+                </ul>
+            </li> 
+            <li>
+                <a>房源管理</a>
+                <ul>
+                    <li><a onclick="func(this)" href="hourse.html" target="MainFrame">房屋管理</a></li>
+                    <li><a onclick="func(this)" href="priceControl.html" target="MainFrame">价格管理</a></li>
+                </ul>
+            </li> 
+            <li>
+                <a>经营管理</a>
+                <ul>
+                    <li><a onclick="func(this)" href="gaikuang.html" target="MainFrame">经营概况</a></li>
+                    <li><a onclick="func(this)" href="youxuan.html" target="MainFrame">家园优选</a></li>
+                    <li><a onclick="func(this)" href="bingke.html" target="MainFrame">宾客管理</a></li>
+                </ul>
+            </li> 
+ 			<li>
+                <a>账单管理</a>
+                <ul>
+                    <li><a onclick="func(this)" href="jiesuanc.html" target="MainFrame">结算查询</a></li>
+                    <li><a onclick="func(this)" href="jiesuans.html" target="MainFrame">结算设置</a></li>
+                </ul>
+            </li> 
+            <li>
+                <a>门店管理</a>
+                <ul>
+                    <li><a href="mendian.html" target="MainFrame">门店设置</a></li>
+                </ul>
+            </li> 
+        </ul>
+		</div>
+		<div id="right">
+			<iframe name="MainFrame" style="width: 1100px;height: 900px;" src="dingdan.html">
+				
+			</iframe>
+			
+		</div>
+	</div>
+	<div></div>
+</body>
+</html>

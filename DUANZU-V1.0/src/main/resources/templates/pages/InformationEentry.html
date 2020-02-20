@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>途家管家</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<style type="text/css">
+			.header {
+				width: 1000px;
+				height: 66px;
+				background-color: rgba(82, 104, 197, 1);
+				margin: 0 auto;
+				position: relative;
+				z-index: 300;
+			}
+			
+			.menu_list {
+				width: 268px;
+				margin: 20px 0 0 40px;
+				/*display: inline;*/
+				float: left;
+			}
+			
+			.content_right {
+				width: 1000px;
+				height: 680px;
+				display: inline;
+				border: 1px solid #ccc;
+				/*position: fixed;*/
+				position: absolute;
+				/*z-index: 200;*/
+				float: right;
+				background-color: white;
+			}
+			
+			.menu_head {
+				height: 47px;
+				line-height: 47px;
+				padding-left: 38px;
+				font-size: 14px;
+				color: #525252;
+				cursor: pointer;
+				border: 2px solid rgba(238, 238, 238, 1);
+				position: relative;
+				margin: 0px;
+				font-weight: bold;
+				background: rgba(248, 248, 248, 1);
+			}
+			
+			.menu_list .current {
+				background: rgba(248, 248, 248, 1);
+			}
+			
+			.menu_nva {
+				line-height: 38px;
+				border-left: 2px solid rgba(248, 248, 248, 1);
+				backguound: #fff;
+				border-right: 2px solid rgba(248, 248, 248, 1);
+			}
+			
+			.menu_nva a {
+				display: block;
+				height: 38px;
+				line-height: 38px;
+				padding-left: 38px;
+				color: #777777;
+				background: #fff;
+				text-decoration: none;
+				border-bottom: 1px solid rgba(248, 248, 248, 1);
+			}
+			
+			.menu_nva a:hover {
+				text-decoration: none;
+			}
+			
+			.header_left {
+				float: left;
+				margin-left: 40px;
+				line-height: 66px;
+				position: absolute;
+			}
+			
+			.header_left-span1 {
+				font-size: 28px;
+				color: #FFFFFF;
+			}
+			
+			.header_left-span2 {
+				margin-left: 20px;
+				font-size: 12px;
+				color: #FFFFFF;
+			}
+			
+			.header_right {
+				float: right;
+				line-height: 66px;
+				margin-top: 10px;
+				/*width: 50%;*/
+				height: 66px;
+				position: relative;
+			}
+			
+			.header_right>div {
+				/*position: absolute;*/
+				top: 0;
+				right: 0;
+			}
+			/*.header_right ul {
+				margin-top: 20px;
+			}*/
+			
+			.header_right ul li {
+				border-right: 1px solid;
+				height: 13px;
+				font-size: 15px;
+				padding: 0 25px;
+				font-weight: bold;
+				color: #FFFFFF;
+			}
+			
+			.header_right ul li {
+				float: left;
+				line-height: 13px;
+				text-decoration: none;
+			}
+			
+			.header_right ul li:hover {
+				color: #FFFFFF;
+			}
+			
+			.header_right ul:last-child li {
+				/*去掉最后的边框*/
+				border: none;
+			}
+			
+			.show_list {
+				position: relative;
+				list-style: none;
+				text-align: center;
+				line-height: 66px;
+				display: inline;
+			}
+			
+			.show_list .move_list {
+				list-style: none;
+				display: none;
+				z-index: 1000;
+				position: absolute;
+				/*left: 0;*/
+				/*width: 100%;*/
+				background: #FFFFFF;
+				text-align: center;
+				margin: 20px auto;
+				border-radius: 4px;
+			}
+			
+			.show_list .move_list li {
+				padding: 20px 0;
+				width: 120px;
+				color: #000;
+				text-align: center;
+				margin: 0 auto;
+				margin-left: -34px;
+				list-style: none;
+			}
+			
+			.header_right ul .show_list {
+				padding-bottom: 30px;
+				border-right: none;
+			}
+			
+			.show_list:hover .move_list {
+				display: block;
+			}
+			/*.header_right ul a:nth-child(3) {
+				border-left: 1px solid #000;
+			}*/
+			
+			.show_list .move_list li:hover {
+				color: rgba(82, 104, 197, 1);
+				background: white;
+				border-radius: 4px;
+			}
+			
+			.move_list li a {
+				cursor: pointer;
+				text-align: center;
+				margin: 0 auto;
+			}
+			
+			.plusIcon {
+				display: inline-block;
+				background: rgb(8, 8, 8);
+				height: 52px;
+				position: relative;
+				width: 2px;
+				top: 35%;
+			}
+			
+			.plusIcon:after {
+				background: rgb(8, 8, 8);
+				content: "";
+				height: 52px;
+				left: 35%;
+				position: absolute;
+				top: 0;
+				width: 2px;
+				transform: rotateZ(90deg)
+			}
+			
+			.div_imgall {
+				border: 1px solid #CCCCCC;
+				/* 调整div_imgall的宽高和berder的大小，子元素大小会自适应 */
+				width: 300px;
+				height: 200px;
+				position: relative;
+				display: inline-block;
+				margin-left: 10px;
+			}
+			
+			.input_flie {
+				display: block;
+				width: 100%;
+				height: 100%;
+				opacity: 0;
+				z-index: 100;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+			
+			.div_shuline {
+				position: absolute;
+				width: 30%;
+				height: 3px;
+				background-color: #CCCCCC;
+				left: 35%;
+				top: 49%;
+				z-index: 5;
+			}
+			
+			.div_hengline {
+				position: absolute;
+				width: 3px;
+				height: 30%;
+				background-color: #CCCCCC;
+				left: 49%;
+				top: 35%;
+				z-index: 5;
+			}
+		</style>
+	</head>
+
+	<body style="background-color: rgba(241,242,245,1);">
+			<!--<div style="display: inline;position: fixed; margin:20px 20px 20px 30px; width: 1080px; border: 1px solid #ccc; ">-->
+			<div class="content_right">
+				<div style="width: 100%; height: 54px; vertical-align: middle;line-height: 54px;">
+					<span style="font-size: 22px; margin-left: 20px;">资质信息</span>
+				</div>
+				<div style="width: 950px; height: 1px; margin-left: 20px; background: #CCCCCC; "></div>
+				<div style="margin-top: 30px; margin-left: 20px;">
+					<form enctype="multipart/form-data" method="post" id="fileUploadForm">
+						证件类型：<br />
+						<div style="margin-top: 10px;">
+							<label><input name="type"  type="radio" value="身份证" />身份证 </label>
+							<label><input name="type"  type="radio" value="护照 " />护照 </label>
+							<label><input name="type"  type="radio" value="营业执照" />营业执照 </label>
+						</div>
+
+				<div style="margin-top: 30px; margin-left: 20px;">
+						姓名：<br />
+						<input style="width: 300px; height: 30px; margin-top: 10px; " name="name" type="input" value="" placeholder="请输入证件持有者姓名" />
+				</div>
+				<div style="margin-top: 30px; margin-left: 20px;">
+						身份证号：<br />
+						<input style="width: 300px; height: 30px; margin-top: 10px; " name="IDnumber" type="input" value="" placeholder="请填写负责人身份证号" />
+				</div>
+				<div style="margin-top: 30px; margin-left: 20px;">
+						证件上传<span style="margin-left: 12px; font-size: 12px; color: #CCCCCC;">请按照示例上传您的身份证，以便我们进行核实</span><br />
+						<div style="margin: 10px auto; ">
+							<div class="div_imgall">
+								<input type="file" class="input_flie" name="files"/>
+								<div class="div_shuline"></div>
+								<div class="div_hengline"></div>
+							</div>
+							<div class="div_imgall">
+								<input type="file" class="input_flie" name="files"/>
+								<div class="div_shuline"></div>
+								<div class="div_hengline"></div>
+							</div>
+							<div class="div_imgall">
+								<input type="file" name="files" class="input_flie" />
+								<div class="div_shuline"></div>
+								<div class="div_hengline"></div>
+							</div>
+						</div>
+						<input type="submit" value="Submit" id="submitButton"/>
+					</form>
+					</div>
+        			 	<span id="result"></span>
+      				</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			$(document).ready(function() {
+				$("#firstpaneDiv .menu_nva:eq(0)").show();
+				$("#firstpaneDiv h3.menu_head").click(function() {
+					$(this).addClass("current").next("div.menu_nva").slideToggle(200).siblings("div.menu_nva").slideUp("slow");
+					$(this).siblings().removeClass("current");
+				});
+				$("#secondpane .menu_nva:eq(0)").show();
+				$("#secondpane h3.menu_head").mouseover(function() {
+					$(this).addClass("current").next("div.menu_nva").slideDown(400).siblings("div.menu_nva").slideUp("slow");
+					$(this).siblings().removeClass("current");
+				});
+			});
+			
+			$(function(){
+				$("#submitButton").click(function(event) {
+					 // Stop default form Submit.
+					 event.preventDefault();
+					// Call Ajax Submit.
+					 ajaxSubmitForm();
+						});
+					   });
+					 
+					function ajaxSubmitForm() {
+					    // Get form
+					var form = $('#fileUploadForm')[0];  
+					var data = new FormData(form);
+					    console.log(data)
+					$("#submitButton").prop("disabled", true);
+					$.ajax({
+					type: "POST",
+					enctype: 'multipart/form-data',
+					url: "/business/doSaveObject",
+					data: data,
+					 // prevent jQuery from automatically transforming the data into a query string
+					processData: false,
+					contentType: false,
+					cache: false,
+					timeout: 1000000,
+					success: function(data, textStatus, jqXHR) {
+						if(data.state == 1){
+						alert("信息上传成功，请耐心等待平台审核！")
+						location.href = "/index1";
+						}
+					        },
+					        
+					error: function(jqXHR, textStatus, errorThrown) {  
+					$("#result").html(jqXHR.responseText);
+					            
+					console.log("ERROR : ", jqXHR.responseText);
+					$("#submitButton").prop("disabled", false);
+						}
+					    
+					   });
+			}
+			
+		</script>
+	</body>
+
+</html>

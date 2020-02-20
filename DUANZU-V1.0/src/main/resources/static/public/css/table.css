@@ -1,0 +1,119 @@
+#browselabel {
+ margin-bottom:15px;
+ width: 96%; 
+ font-size: 15px;
+ border: 1px solid #ffffff;
+ border-collapse: collapse;
+}
+#liveprice{
+ font-size: 20px;
+ 
+}
+.orderList{
+ text-align: center;
+ font-size: 18px;
+}
+#browselabel img{
+ padding:10px 0px 10px 10px;
+}
+#label{
+ margin-top:15px;
+}
+/*  
+ text-align: center;
+ 
+*/
+body {
+ font-family: "微软雅黑";
+ background-color: #ffffff;
+}
+
+h2 {
+ text-align: center;
+}
+
+#tableId {
+ margin-top:15px;
+ width: 96%;
+ margin: 0 auto;
+ text-align: center;
+ border-collapse: collapse;
+ font-size: 15px;
+ border: 1px solid #ffffff;
+}
+
+td, th {
+ padding: 5px;
+ border-bottom: 0px;
+}
+td #liveprice{
+ width:40px;
+ text-align: center;
+ color:#FF7F24;
+ font-weight: bold;
+ font-size:20px;
+}
+
+#img {
+ width: 150px;
+ height: 100px;
+}
+
+th {
+ background-color: #DCDCDC;
+ width: 120px;
+}
+
+th.width-40 {
+ width: 150px;
+}
+
+th.width-50 {
+ width: 90px;
+}
+
+th.width-70 {
+ width: 100px;
+}
+
+th.width-200 {
+ width: 200px;
+}
+/* th.width-120{ width: 100px; } */
+hr {
+ margin-bottom: 20px;
+ border: 1px solid #aaa;
+}
+
+#add-order {
+ text-align: center;
+ font-size: 20px;
+}
+
+a {
+ color: #000080;
+ text-decoration: none;
+}
+
+#qx {
+ color: black;
+}
+
+#allding{
+	width: 950px;
+	border-collapse:collapse;
+	font-family:"微软雅黑";
+	
+}
+
+      
+#selectId{
+	margin-top:5px;
+	background:#fafdfe;  
+    height:28px;  
+    width:100px;  
+    line-height:28px;  
+    border:1px solid #9bc0dd;   
+	float:right;
+}
+           

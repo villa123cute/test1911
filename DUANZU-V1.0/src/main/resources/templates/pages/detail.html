@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>途家管家-资质信息</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<style type="text/css">
+			.content_right {
+				width: 1000px;
+				height: 680px;
+				display: inline;
+				border: 1px solid #ccc;
+				/*position: fixed;*/
+				position: absolute;
+				/*z-index: 200;*/
+				float: right;
+				background-color: white;
+			}
+			
+			.div_imgall {
+				border: 1px solid #CCCCCC;
+				/* 调整div_imgall的宽高和berder的大小，子元素大小会自适应 */
+				height: 300px;
+				position: relative;
+				display: inline-block;
+			}
+			
+			.input_flie {
+				display: block;
+				width: 100%;
+				height: 100%;
+				opacity: 0;
+				z-index: 100;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+			
+			.div_shuline {
+				position: absolute;
+				width: 30%;
+				height: 3px;
+				background-color: #CCCCCC;
+				left: 35%;
+				top: 49%;
+				z-index: 5;
+			}
+			
+			.div_hengline {
+				position: absolute;
+				width: 3px;
+				height: 30%;
+				background-color: #CCCCCC;
+				left: 49%;
+				top: 35%;
+				z-index: 5;
+			}
+		</style>
+	</head>
+
+	<body style="background-color: rgba(241,242,245,1);">
+		<div class="content_right">
+			<div style="width: 100%; height: 54px; vertical-align: middle;line-height: 54px;">
+				<span style="font-size: 22px; margin-left: 20px;">资质信息</span>
+			</div>
+			<div style="width: 950px; height: 1px; margin-left: 20px; background: #CCCCCC; "></div>
+			<div style="width: 950px; height: 44px;margin-left: 20px;margin-top: 30px; border: 1px solid orange;vertical-align: middle;line-height: 44px;background-color: rgba(254,251,247,1) ;">
+				<div id="status" style="margin-left: 20px; font-size: 14px;">审核成功</div>
+			</div>
+
+			<div style="width: 950px; height: 122px;margin-left: 20px;margin-top: 30px; background-color: #CCCCCC;">
+				<div style="margin-left: 20px;padding-top: 10px; font-size: 14px;vertical-align: middle;line-height: 34px;">证件类型: 营业执照</div>
+				<div style="margin-left: 20px; font-size: 14px;vertical-align: middle;line-height: 34px;">公司名称: 上海********有限公司</div>
+				<div style="margin-left: 20px; font-size: 14px;vertical-align: middle;line-height: 34px;">企业注册号: 91*************H47HR9</div>
+			</div>
+			<div style="margin-top: 30px; margin-left: 20px;">
+				<form action="" method="get">
+					证件信息：<br />
+					<div style="margin: 10px auto; ">
+						<div class="div_imgall">
+							<img id="img1" src="img/banner.jpg" style="width: 300px; height: 200px;float:left;margin:10px" />
+							<img id="img2" src="img/banner.jpg" style="width: 300px; height: 200px;float:left;margin:10px" />
+							<img id="img3" src="img/banner.jpg" style="width: 300px; height: 200px;float:left;margin:10px" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+<script>
+$(function(){
+	var url = "business/getDetails";
+	var userID = "100017";
+	var data = {"userid":userID};
+	$.getJSON(url,data,function(result){
+		console.log(result)
+		if(result){
+			if(result.data.status == '0')
+			$("#status").text("等待审核");
+			if(result.data.status == '1')
+			$("#status").text("审核成功");
+			if(result.data.status == '2')
+				$("#status").text("证件信息异常");
+			
+			$("#img1").attr("src","http://image.duanzu.com"+result.data.idpath);
+			$("#img2").attr("src","http://image.duanzu.com"+result.data.passportpath);
+			$("#img3").attr("src","http://image.duanzu.com"+result.data.businesslicensepath);
+			
+		}
+		
+		
+	});
+	
+	
+})
+</script>
+	</body>
+
+</html>

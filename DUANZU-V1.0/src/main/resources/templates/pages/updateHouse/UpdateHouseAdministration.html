@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+
+<style type="text/css">
+li {
+	list-style: none;
+}
+
+body {
+	width: 900px;
+}
+
+button {
+	padding: 0;
+	background-color: #222222;
+	color: white;
+	font-size: 12px;
+	border-color: #222222;
+	width: 110px;
+	height: 30px;
+}
+
+td {
+	font-size: 12px;
+}
+
+a {
+	text-decoration: none;
+}
+
+body {
+	width: 900px;
+	height: 800px;
+}
+
+tr {
+	float: none;
+	border: 1px solid #000000;
+}
+
+tr td {
+	float: left;
+	list-style: none;
+	width: 70px;
+	height: 30px;
+	font-size: 12px;
+}
+/*tr td.hover:hover{
+				-webkit-transform: translateY(-3px);
+				-ms-transform:translaterY(-3px);
+				transform:translaterY(-3px);
+				-webkit-box-shadow: 0 0 6px #FF9999;
+				box-shadow: 0 0 6px #999;
+				-webkit-transition: all .1s ease-out;
+				transition: all .1s ease-out;
+			}*/
+img {
+	width: 220px;
+	height: 150px;
+}
+
+
+</style>
+</head>
+<body>
+	<div>
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tr style="width: 900px;">
+				<td
+					style="width: 200px; font-weight: bolder; font-size: 20px; text-align: left;">房屋管理</td>
+					
+				<td style="width: 0px;margin:0px 0px 0px 580px;">
+					<button onclick="window.location.href = 'doHousingLocation' ">+发布新房屋</button>
+					<!--input type="button" value="" -->
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<p style="height: 1px;"></p>
+ <section class="content-header1" style="background-color:#C0C0C0;margin:0px 0px 0px 0px;">
+      <ol class="breadcrumb">
+       <li><a style="font-size: 15px;float:left;margin:0px 300px 0px 0px;" ><i class="fa fa-dashboard"></i>房屋名称</a></li>
+        <li><a style="font-size: 15px;float:left;margin:0px 0px 0px 220px;" ><i class="fa fa-dashboard"></i>房屋状态</a></li>
+        <li><a  style="font-size: 15px;float:left;margin:0px 0px 0px 180px;" ><i class="fa fa-dashboard"></i>操作</a></li>
+      </ol>
+    </section>
+    <section class="content-header2">
+       <a style="margin:5px 0px 0px 0px;font-size:15px;float:left;">#{发布状态?} </a>
+       
+    </section>
+
+
+		<table id="houseSurvey" cellpadding="0" cellspacing="0" height="100">
+			<tbody class="tbodyId">
+				<tr>
+					<td class="loadText">数据正在加载中...</td>
+				</tr>
+			</tbody>
+			<tr class="bee">
+			</tr>
+		</table>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				
+				   $("#houseSurvey").load("doPageTable",function(){
+					   
+					   doGetObjects();
+				   });
+			});
+			function doGetLandlordId()
+			{
+				 var LandlordId=900001;    //此处动态获取房东Id
+				 return LandlordId;
+			}
+			
+			function doGetHouseState()  
+			{
+				 var houseState="已发布";   //此处动态获取发布状态
+				 return houseState;
+			}
+			
+			 function doGetObjects(){
+				 
+				var  landlordId =doGetLandlordId();
+				var params={"landlordId":landlordId};   //可能需要需要转换Long类型!!!
+				   var url="house/doFindAll";
+			       $.getJSON(url,params,function(result){
+			    	        doHandleResponseResult(result);
+			    	        $(".deleteHouse").on("click",function(){
+			    	        	var houseId=$(this).val();
+			    	        	doDeleteObject(houseId);
+			    			 });
+			    	        
+			    	        $("#ChangePageTo").on("change",function(){
+			    				var pageName = $("#ChangePageTo").val();
+			    				 var id=$("#ChangePageTo").prop("name");
+			    				 debugger
+			    				 doChangePageByName(pageName,id);
+			    			});
+					 });
+			   }
+			 function doHandleResponseResult (result){ 
+				 
+				   if(result.length>=1){//ok
+					   $(".loadText").html("");
+					   var tBody=$(".tbodyId");
+					   tBody.empty();
+					//此处应判断houseState是否为已发布,才继续执行下一步 
+					   for(var i in result)
+					   {
+					    var td1=$("<td style='background-color: #999999;width: 900px;'>");
+					    var td2=$("<td style='width: 200px; margin:8px 0px 0px 0px'><img src='img/928769.png' height=300px ></td>");
+					    var td3=doCreateTds(result[i]);
+					   
+					    $(".bee").append(td1);
+						$(".bee").append(td2);
+						$(".bee").append(td3);
+					   }
+				    }else
+				    {
+				    	var tab1=$("#houseSurvey");
+						tab1.empty();
+						var tab2=$(".content-header1");
+						tab2.empty();
+						var tab3=$(".content-header2");
+						tab3.empty();
+						var tab4=$("#houseCount");
+						tab4.empty();
+					alert("您还未发布房屋!");
+				    } 
+				   
+			 }
+			 
+			 function  doCreateTds(obj)
+				{
+						var td3="<ul >"+
+						"	<a class='HouseName' style='display:inline-block;font-size: 20px; margin:10px 0px 0px 35px'>"+obj.houseName+"</a>"+
+						"<select id='ChangePageTo'  style='float:right;width: 80px;height: 22px ;margin:10px 0px 0px 0px'  " +
+						"name="+obj.houseId  +  
+						">"+
+						 " <option  value='none' >编辑房屋</option>"+
+						 " <option   value='HouseLocation'  >房屋位置</option>"+
+						 " <option     value='HousingDetails'   >房屋详情</option>"+
+						"  <option    value='HouseDescription'  >房屋描述</option>"+
+						 " <option     value='FacilitiesServices'>设施服务</option>"+
+						 " <option   value='HousePhotos'  >房屋照片</option>"+
+						 " <option   value='PriceSetting'  >价格</option>"+
+						"</select>"+
+						"<button style='float:right;width:40px;margin:0px 0px 0px 20px' onclick='window.location.href = '#' '>下架</button>"+
+						"<button class='deleteHouse' style='float:right;width: 40px;margin:0px 0px 0px 0px' "+
+						"value="+obj.houseId  +  
+						">删除</button>"+
+						"	<a class='status' style='font-size: 13px;float:right;margin:10px 155px 0px 0px'>"+obj.status+"</a>"+
+						"	<li class='HouseType' style='width: 200px;margin:8px 0px 0px 185px' >"+obj.houseType+"</li>"+
+						"	<li class='HoouseAddr' style='width: 380px;margin:8px 0px 0px 185px'>"+obj.houseAddress+"</li>"+
+						
+						"	<li>&nbsp;</li>"+
+						"	<a class='HouseTime' style='font-size: 12px;color: #666666;margin:15px 0px 50px 185px'>最后提交时间："+obj.houseTime+"&nbsp&nbsp"+"</a>"+
+						"	<a class='HouseId' style='font-size: 12px;display:inline-block;color: #666666;margin:0px 0px 0px 0px' >房源编号："+obj.houseId+"</a>"+
+						"</ul>"
+						return td3;
+				}
+			</script>
+
+		<div id="houseCount" style='margin:0px 0px 0px 5px'></div>
+		<script type="text/javascript">
+		 $(function(){
+			  
+			 var url="house/selectHouseCount";
+			 var  landlordId =doGetLandlordId();
+			 var params={"landlordId":landlordId};   //可能需要需要转换Long类型!!!
+			 $.getJSON(url,params,function(result){
+	    	        doSelectHouseCountResult(result);
+			 });
+		 })
+		  function doSelectHouseCountResult (result){ 
+				var p1=" <p class='houseCount'  style='font-size: 25px;margin:8px 0px 0px 0px'>共"+result+"间房屋</p>"
+			  $("#houseCount").append(p1);
+			 }
+		 function doDeleteObject(houseId){
+			 debugger
+			  //2.给出提示是否确认删除
+			  if(!confirm("确认删除吗"))return;
+			  //3.发送异步请求执行删除操作
+			  //3.1定义请求参数
+			  var params={"houseId":houseId};
+			  //3.2定义请求url
+			  var url="house/doDeleteObject";
+			  //3.3发送异步请求
+			  $.post(url,params,function(result){
+				  if(result.state==1){
+					  alert("删除成功!");
+					 // $.post("HousingManagement");
+					 // window.location.reload();
+					  $("#tr_id").remove();
+				  }else{
+					  alert(result.message);
+				  }
+			  })
+			} 
+
+		function doChangePageByName(pageName,id){
+			var url="doUpdate"+pageName;
+			var params={"houseId":id};
+			localStorage.setItem("houseId",id);
+			window.location.href=url;
+		}
+	   </script>
+	</div>
+	
+
+</body>
+</html>

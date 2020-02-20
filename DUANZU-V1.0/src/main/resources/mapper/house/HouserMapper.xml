@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.tedu.duanzu.Dao.marongDao.HouseDao">
+    <select id="findAll" resultType="com.tedu.duanzu.entity.HouseLocation">
+      select house_id houseId ,landlord_id landlordId,house_name houseName,house_address houseAddress,
+      status,house_time houseTime,state,rental_mode rentalMode,house_class houseClass,house_type houseType 
+      from tb_house 
+      where landlord_id=#{landlordId};
+    </select>
+    
+     <select id="getRowCount"    resultType="int">
+          select count(*)  from tb_house where landlord_id=#{landlordId};
+    </select>
+    
+    
+    <select id="findPageObjects" resultType="com.tedu.duanzu.entity.HouseLocation">
+         select *   from tb_house  where landlordId=#{landlordId} order by house_time desc limit #{startIndex},#{pageSize}    
+    </select>
+    
+    
+    <insert id="insertHouseLocation"  parameterType="com.tedu.duanzu.entity.HouseLocation"  useGeneratedKeys="true"   keyProperty="houseId">
+     insert into tb_house 
+     (house_id,landlord_id,province,hproper,house_city,harea,street_address,house_address,
+  additional_explanation,house_number,three_level_inkage) 
+      values 
+      (null,#{landlordId},#{province},#{hproper},#{houseCity},#{harea},#{streetAddress},#{houseAddress},
+   #{additionalExplanation},#{houseNumber},#{threeLevelInkage})
+    </insert>
+    
+    <update id="updateHouseLocation">
+     update tb_house set  
+     landlord_id=#{landlordId},province=#{province},hproper=#{hproper},house_city=#{houseCity},harea=#{harea}, 
+     street_address=#{streetAddress},house_address=#{houseAddress}, additional_explanation=#{additionalExplanation}, 
+     house_number=#{houseNumber},three_level_inkage=#{threeLevelInkage}  
+     where  
+     house_id=#{houseId}
+    </update>
+    
+    <update id="updateHouseHouseDetails">
+      update  tb_house  set rental_mode=#{rentalMode},house_class=#{houseClass},floor_space=#{floorSpace}, 
+      ambitus=#{ambitus}, house_type=#{houseType},bed_type=#{bedType}  
+      where  
+      house_id=#{houseId}
+    </update>
+    
+    <update id="updateHouseDescription">
+     update  tb_house  set 
+     house_name=#{houseName} ,house_feature=#{houseFeature},position=#{position},peripheral_introduction=#{PeripheralIntroduction} 
+     where 
+      house_id=#{houseId}
+    </update>
+    
+     <insert id="insertFacilitiesServices">
+      insert into tb_house_facilities_services 
+      (id,equipment,sanitary_squipment,kitchen_equipment,entertainment_equipment,
+      safety_equipment,building_equipment,peripheral_equipment,other_services)  
+      values 
+      (#{id},#{equipment},#{sanitaryEquipment},#{kitchenEquipment},#{entertainmentEquipment},
+      #{safetyEquipment},#{buildingEquipment},#{peripheralEquipment},#{otherServices})
+    </insert>
+    
+    <update id="updateFacilitiesServices">
+      update tb_house_facilities_services  set  
+      equipment=#{equipment},sanitary_Equipment=#{sanitaryEquipment},kitchen_equipment=#{kitchenEquipment},
+      entertainment_equipment=#{entertainmentEquipment},safety_equipment=#{safetyEquipment},
+      building_equipment=#{buildingEquipment},peripheral_equipment=#{peripheralEquipment},
+      other_services=#{otherServices}  
+       where id=#{id}
+    </update>
+    
+    <insert id="insertPriceSetting">
+      insert into tb_house_price  
+      (id,house_id,base_price,clean_money,people_number,add_people_money,scheduled_days,housing_deposit,cancel_days,falsify) 
+      values 
+      (null,#{houseId},#{basePrice},#{cleanMoney},#{peopleNumber},#{addPeopleMoney},#{scheduledDays},#{housingDeposit},#{cancelDays},#{falsify})
+    </insert>
+    
+    <update id="updatePriceSetting">
+     update tb_house_price set 
+     base_price=#{basePrice},clean_money=#{cleanMoney},people_number=#{peopleNumber},add_people_money=#{addPeopleMoney},
+     scheduled_days=#{scheduledDays},housing_deposit=#{housingDeposit},cancel_days=#{cancelDays},falsify=#{falsify} 
+      where house_id=#{houseId} 
+    </update>
+    
+    <insert id="insertHousePicture">
+      insert into tb_house_picture 
+      (picture_id,house_id,class_name,picture_path)  
+      values  
+        (null ,#{houseId},#{className},#{picturePath}) 
+    </insert>
+    
+    <update id="updateHousePicture">
+     update tb_house_picture  set 
+     class_name=#{className},picture_path=#{picturePath} 
+     where house_id=#{houseId}
+    </update>
+ <!--    <update id="updateHouse"   >
+     update tb_house set 
+     house_name =#{houseName},hcity=#{hcity},hproper=#{hproper},harea=#{harea},street_address=#{streetAddress},
+      house_address=#{houseAddress},master_phone =#{masterPhone},lease_way=#{leaseWay},
+      house_class =#{houseClass},floor_space =#{floorSpace},house_type=#{houseType},bed_type =#{bedType},
+      people_number=#{peopleNumber},house_number=#{houseNumber},together_status =#{togetherStatus},
+      house_feature =#{houseFeature},position=#{position},ambitus=#{ambitus},status=#{ambitus},
+      house_time =#{houseTime},landlord_name =#{landlordName},house_state =#{houseState},
+      additional_explanation=#{additionalExplanation},house_address_number=#{houseAddressNumber},three_level_inkage=#{threeLevelInkage},
+      equipment=#{equipment},rental_mode=#{rentalMode}  
+       where id=#{id}
+    </update> -->
+     
+    <select id="findById" resultType="int">
+     select house_id from tb_house where three_level_inkage=#{threeLevelInkage}  and  
+     street_address=#{streetAddress}  and  house_number=#{houseNumber}  and landlord_id=#{landlordId} 
+    </select> 
+  </mapper>

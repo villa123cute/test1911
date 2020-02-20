@@ -1,0 +1,98 @@
+.divb{
+	padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#floor{
+	box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px 0 rgba(63,63,68,.15);
+	padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.diva{
+	padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 25px;
+    width: 950px;
+}
+
+.priceList{
+	padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 25px;
+    width: 950px;
+}
+
+table{
+    border-collapse: collapse;
+    table-layout:fixed;
+	width: 950px;
+}
+
+tr{
+    /* 添加边框 */
+    border:2px solid #e8e8ea;
+}
+
+.houseinfo{
+	text-align:left;
+}
+
+#housetitle{
+	font-size: 18px;
+}
+
+td{
+    /* 设置单元格边框和内容之间的距离(内边距) */
+    font-size: 14px;
+    text-align: center;
+    padding: 10px;
+    background-color: #f8f8f9;
+}
+
+td.pricetd{
+	padding: 10px 0px;
+}
+
+button{
+	padding: 3px 10px;
+    border:2px solid #e8e8ea;
+    background-color: #f8f8f9;
+}
+
+.bua{
+    color: white;
+    background-color: #6e80e3;
+    border-color: #6e80e3;
+}
+
+input{
+	padding: 2px 10px;
+    border:2px solid #e8e8ea;
+}
+
+#spa{
+	font-size: 20px;
+	line-height: 30px;
+    font-weight: bold;
+}
+
+input[type="checkbox"] {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#tra td{
+    border:2px solid #e8e8ea;
+}
+
+.spb{
+    border:2px solid #e8e8ea;
+}
+select{
+	padding: 2px 10px 5px 10px;
+}

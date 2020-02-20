@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<script src="public/js/jquery-1.8.3.min.js"></script>
+<style type="text/css">
+</style>
+</head>
+<body>
+	<div id="bt">
+		<dl>
+			<dt>
+				<img src="../img/timg (1).jpg">
+			</dt>
+			<dd>
+				<ul id="ul1">
+					<li>房间风格</li>
+					<li>基础价</li>
+					<li>入住人：张伟</li>
+					<li>入住日期：2019.10.24</li>
+				</ul>
+			</dd>
+			<dd>
+				<ul id="ul2">
+					<li>预订房数：</li>
+					<li>总价</li>
+					<li>押金信息k</li>
+					<li></li>
+				</ul>
+			</dd>
+			<dd>
+				<ul id=ul3>
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+					<li><a href="dingdan/pinglun.html">评价</a></li>
+					<li></li>
+				</ul>
+			</dd>
+		</dl>
+	</div>
+	<div id="pageId" class="box-footer clearfix">
+		
+	</div>
+	<!-- /.box-body -->
+</body>
+<script type="text/javascript">
+	
+	$(function(){
+		$("#pageId").load("common/page.html");
+		
+	})
+
+
+	function doGetObjects() {
+		var url = "tb/dingDan"
+		var params = {
+			"pageCurrent" : 1
+		};
+		$.getJSON(url, params, doHandleResponseResult);
+	}
+	function doHandleResponseResult(result) {
+		console.log("result", result)
+		if (result.state == 1) {
+			doSetTableBodyRows(result.data.records);//records
+			//2.初始化分页页面上的分页信息
+			doSetPagination(result.data);//pageObject
+		} else {//error
+			alert(result.message);
+		}
+	}
+	function doSetTableBodyRows(records) {
+		var ul1 = $("#ul1");
+		ul1.empty();
+		for ( var i in records) {
+			var li = doCreateTds(records[i]);
+			ul1.append(li)
+		}
+	}
+	function doCreateTds(data) {
+		var li = "<li>" + data.itemId + "</li>" + "<li>" + data.loger + "</li>"
+				+ "<li>" + data.houseNumber + "</li>"
+		return li;
+
+	}
+</script>
+</html>

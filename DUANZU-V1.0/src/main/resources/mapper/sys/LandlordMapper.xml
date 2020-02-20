@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tedu.duanzu.Dao.LandlordDao">
+
+  <insert id="insertObject"
+  parameterType="com.tedu.duanzu.entity.Landlord">
+  insert into tb_landlord(
+  Landlord_path,nickname,house_area,house_city,welcoming,
+  introduce,receive_foreign_guests,receive_language,
+  invoice,credit_deposit_free,dishonest_tenant ,
+  stage,master_number,start_time,end_time,
+  customer_number,service_number,service_work,service_email)
+  values
+  (#{LandlordPath},#{nickname},#{houseArea},#{houseCity},#{welcoming},
+  #{introduce},#{receiveForeignGuests},#{receiceLanguage},
+  #{invoice},#{creditDepositFree},#{dishonestTenant},
+  #{stage},#{masterNumber},#{startTime},#{endTime},#{customerNumber},
+  #{serviceNumber},#{serviceWork},#{serviceEmail})
+  
+  </insert>
+  
+  <update id="updateObject"
+  parameterType="com.tedu.duanzu.entity.Landlord">
+  update tb_landlord
+   set
+ Landlord_path=#{LandlordPath},nickname=#{nickname},
+  house_area=#{houseArea},house_city=#{houseCity},
+  welcoming=#{welcoming},introduce=#{introduce},
+  receive_foreign_guests=#{receiveForeignGuests},
+  receice_language=#{receiceLanguage},invoice=#{invoice},
+  credit_deposit_free=#{creditDepositFree},
+  dishonest_tenant=#{dishonestTenant},stage=#{stage},
+  master_number=#{masterNumber},start_time=#{startTime},end_time=#{endTime},
+  customer_number=#{customerNumber},service_number=#{serviceNumber},
+  service_work=#{serviceWork},service_email=#{serviceEmail}
+   where id=#{id}
+  
+  </update>
+</mapper>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<style>
+#anniu {
+	border: 1px solid #0081C2;
+	background-color: #0081C2;
+	color: white;
+	height: 30px;
+}
+.bg{
+	width: 100%;
+}
+#add{
+	text-align:center;
+}
+
+</style>
+</head>
+<body>
+	<div>
+		<table>
+			<tr style="width: 1000px;">
+				<td
+					style="width: 500px; font-weight: bolder; font-size: 20px; text-align: left;">房屋管理</td>
+				<td style="width: 500px; text-align: right;"><input id="anniu" class="Addbk"
+					type="button"
+					value="&nbsp;&nbsp;&nbsp;&nbsp;+添加新宾客&nbsp;&nbsp;&nbsp;&nbsp;"></input>
+					<!--input type="button" value="" --></td>
+			</tr>
+		</table>
+	</div> 
+	<hr>
+	<div>
+		姓名：<input type="text" name="username" id="name" style="width:60px;" /> 
+		手机号码：<input type="text" name="number" id="number" placeholder="请输11位数手机号码"/> 
+		身份证：<input type="text" name="sfzhm" id="IDcard" placeholder="请输18位数身份证号码"/> 
+		上次入住时间<input type="date" name="shijian1" id="time1"/> 至
+		<input type="date" name="shijian2" id="time2"/>
+	</div>
+	<div id="er">
+		<p style="width: 100%; text-align: right;">
+			<input class="cx" id="anniu" type="button" value="&nbsp;&nbsp;&nbsp;&nbsp;查询&nbsp;&nbsp;&nbsp;&nbsp;" />
+		</p>
+	</div>
+	<div>
+	
+		<p id = row>全部宾客共:</p>
+		<p  style="width: 100%; text-align: right;" id="hyAlll">
+			会员等级： <select class="ALLLL">
+				<option selected="selected" value="">全部</option>
+				<option value="普通会员">普通会员</option>
+				<option value="银卡会员">银卡会员</option>
+				<option value="金卡会员">金卡会员</option>
+			</select>
+		</p>
+	
+	</div>
+	
+	<div>
+		<table class="bg">
+			<thead>
+				<tr style="text-align:left;">
+				    <th><input type="checkbox" id="checkAll">姓名</th>
+					<th>身份证号</th>
+					<th>手机号</th>
+					<th>会员信息</th>
+					<th>最后入住时间</th>
+					<th id="add">操作</th>
+				</tr>	
+			</thead>
+			<!-- <tbody id="tbodyId">
+			    <tr style="text-align:center;">
+			       <td>刘星宇</td>
+			       <td>430703199912157157</td>
+			       <td>18507484803</td>
+			       <td>普通会员</td>
+			       <td>2018-06-05</td>
+			       <td>
+			       	<a href="http://www.baidu.com">发送短信</a>
+			       	<a href="http://www.baidu.com">查看详情</a>
+			       	<a href="http://www.baidu.com">删除宾客</a>			       
+			       </td>
+			    </tr>
+			    
+			    javascript:return false
+			</tbody> -->
+			<tbody id="tbodyId" style="text-align:left; width:100%">
+			    <tr>
+			       <td colspan="6">数据正在加载中...</td>
+			    </tr>
+			</tbody>
+		</table>
+	</div>	
+	<div>
+	<table>
+		<tr>
+			<td>
+				<input id="anniu" type="button" class="szhya" value="&nbsp;&nbsp;&nbsp;&nbsp;批量设置会员&nbsp;&nbsp;&nbsp;&nbsp;"></input>
+				<input id="anniu" type="button" class="fsdxa" value="&nbsp;&nbsp;&nbsp;&nbsp;批量发送短信&nbsp;&nbsp;&nbsp;&nbsp;"></input>
+			</td>
+		</tr>
+	</table>
+  </div>
+  <script type="text/javascript">
+  /* console.log(result); */
+  /* alert(asd); */
+  /* debugger */
+  var row = 0;
+	$(function(){
+		
+		Queryall();
+		
+		$(".Addbk").on("click",function(){
+			$("#right").load("bingkeAdd.html");
+		});
+		
+		/* 通过会员查询 */
+		$(".ALLLL").on("change",function(){
+			var asd=$(this).val();
+			fandmember(asd);
+		})
+		
+		
+		/* 数据呈现 */
+		$("#er").on("click",".cx",function(){
+			Queryall();
+		});
+		
+		
+		
+		/* 点击按钮 */
+		 $("#checkAll").change(doChangeTBody);
+		
+		$("#tbodyId").on("change",".cBox",doChange);
+		
+		
+		
+	});
+	
+	function fandmember(asd){
+		var url="guest/member";
+		var params={"landlordId":1,
+					"memberlevel":asd
+					};
+		alert(asd);
+		
+		$.getJSON(url,params,function(result){
+			doHandleResponseResult(result);
+		});
+	}
+	
+	
+	function doChange(){
+		 //1.定义一个初始状态值.
+		   var flag=true;
+		   //2.获取tbody中所有checkbox对象的状态值,
+		   //然后进行逻辑与操作.
+		   $("#tbodyId input[type='checkbox']")
+		   .each(function(){
+			   flag=flag&&$(this).prop("checked");
+		   })
+		   //3.更新thead中checkbox的状态值
+		   $("#checkAll").prop("checked",flag);
+	}
+	
+	function doChangeTBody(){
+		 //1.获取thead中全选checkbox对象的状态
+		   var flag=$(this).prop("checked");
+		   //2.设置tbody中checkbox对象的状态
+		   $("#tbodyId input[type='checkbox']")
+		   .prop("checked",flag);
+	}
+	
+	
+	function Queryall(){
+		
+		/* if((/^1[34578]\d{9}$/.test(namenumber))){
+		    alert("这是电话号码");	    
+		}if((/^[\u4E00-\u9FA5]{2,4}$/.test(namenumber))){
+		    alert("姓名");
+		}  */
+		
+		
+		
+		var url="guest/fandAll";
+		var params={"landlordId":1,
+					"realName":$("#name").val(),
+					"phoneNumber":$("#number").val(),
+					"idCard":$("#IDcard").val(),
+					"checkInTime":$("#time1").val(),
+					"checkOutTime":$("#time2").val()};
+		console.log(params); 
+		
+		$.getJSON(url,params,function(result){
+			doHandleResponseResult(result);
+		});
+		
+	}
+	function doHandleResponseResult(result){ //JsonResult
+		   if(result.state==1){//ok
+			//更新table中tbody内部的数据
+			doSetTableBodyRows(result.data);//将数据呈现在页面上 
+		    }else{
+			alert(result.message);
+			doSetTableBodyTTT(result.data);
+		    }  
+	 }
+	function doSetTableBodyTTT(records){
+
+		//1.获取tbody对象,并清空原有内容
+	    var tBody=$("#tbodyId");
+	    tBody.empty();//jquery中清空数据的函数
+	    //2.迭代records记录,然后将其追加到tBody中
+	    	//1)构建tr对象
+	    	var tr=$("<tr></tr>");
+	    	//2)构建多个td对象
+	    	var tds=$("<td colspan='7' style='text-align:center;font-weight:700;color:red'>"+"没有对应的宾客信息"+ "</td>")
+	    	//3)将td对象追加到tr中
+	    	tr.append(tds);
+	    	//4)将tr对象追加到tbody中
+	    	tBody.append(tr);	    
+	}
+	
+	
+	function doSetTableBodyRows(records){
+
+		//1.获取tbody对象,并清空原有内容
+	    var tBody=$("#tbodyId");
+	    tBody.empty();//jquery中清空数据的函数
+	    //2.迭代records记录,然后将其追加到tBody中
+	    for(var i=0;i<records.length;i++){//循环一次取一行
+	    	row++;
+	    	//1)构建tr对象
+	    	var tr=$("<tr class='rowData'></tr>");
+	    	//2)构建多个td对象
+	    	var tds=doCreateTds(records[i]);
+	    	//3)将td对象追加到tr中
+	    	tr.append(tds);
+	    	//4)将tr对象追加到tbody中
+	    	tBody.append(tr);
+	    	$(".rowData").last().data("value",records[i]);
+	    	
+	    }
+   		
+    	$(".xxck").on("click",function(){
+    		var value =$(this).parents(".rowData").data("value");
+    		$("#right").data("memberInfo",value);
+    		$("#right").load("bingkexx");
+    	})
+	    
+	    $("#row").html("全部宾客共:"+row);
+	    row = 0;  
+	    	    
+	    /*删除*/
+		$(".sanchu").on("click",function(){
+			//1.获取选中的id值
+			 var id=$(this).parents(".rowData").data("value");
+			 //2.发异步请求执行删除操作
+			 var url="guest/doDeleteObjects";
+			 var params={"guestId":id.guestId};
+			   
+			   $.post(url,params,function(result){
+				   if(result.state==1){
+					 alert(result.message);
+				   }else{
+					 alert(result.message);
+				   }
+			   })
+			   $("#right").load("bingke.html");
+			   
+		})
+		
+	    /*详细信息*/
+	   /*   $(".xxck").on("click",function(){		 
+			var id=$(this).parents(".rowData").data("value");
+		    var url="guest/select";
+		    var params={"guestId":id.guestId};
+		    $.post(url,params,function(result){
+				   if(result.state==1){
+					 alert(result.message);
+				   }else{
+					 alert(result.message);
+				   }
+			   })
+		    } */
+		
+		
+	}
+	function doCreateTds(data){
+		var tds="<td><input type='checkbox' class='cBox'>"+data.realName+"</td>"+
+	   	 "<td>"+data.idCard+"</td>"+
+	     "<td>"+data.phoneNumber+"</td>"+
+	     "<td>"+data.memberlevel+"</td>"+
+	     "<td>"+data.checkOutTime+"</td>"+
+	     "<td style='text-align:center;'><a href='javascript:void(0)'>发送短信</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' class='xxck'>查看详情</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' class='sanchu'>删除宾客</a></td>";
+  		return tds;
+	}
+</script>	
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>宾客详情</title>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+        }
+        .itemHead{
+            box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px 0 rgba(63,63,68,.15);
+            width: 980px;
+            margin: 0px auto;
+            height: 40px;
+            padding: 10px;
+        }
+        .guestInfoItem{
+            box-shadow: 0 0 0 1px rgba(63,63,68,.05), 0 1px 3px 0 rgba(63,63,68,.15);
+            margin: 15px auto;
+            height: 290px;
+            width: 980px;
+            padding: 10px;
+        }
+        .headLeft{
+            float: left;
+            margin-top: 8px;
+        }
+        .infoButton{
+            float: right;
+            margin-top: 8px;
+        }
+        .guesTable{
+            margin-left: 50px;
+        }
+        .tdRight{
+            text-align: right;
+        }
+        .okButton{
+            padding: 5px 10px;
+            color: white;
+            background-color: #6e80e3;
+            
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="itemHead">
+        <h4 class="headLeft">宾客管理>宾客详情</h4>
+    </div>
+    <div class="guestInfoItem">
+        <h4>基本信息</h4>
+        <table class="guesTable">
+            <tr>
+                <td class="tdRight">姓名：</td>
+                <td id="name"></td>
+            </tr>
+            <tr>
+                <td class="tdRight">身份证号码：</td>
+                <td id="type"></td>
+            </tr>
+            <tr>
+                <td class="tdRight">性别：</td>
+                <td id="gender"></td>
+            </tr>
+            <tr>
+                <td class="tdRight">手机号：</td>
+                <td id="phoneNumber"></td>
+            </tr>
+            <tr>
+                <td class="tdRight">会员等级：</td>
+                <td id="memberClass"></td>
+            </tr>
+            <tr>
+                <td class="tdRight">备注：</td>
+                <td id="remark"></td>
+            </tr>
+        </table>
+        <button class="okButton">确认</button>   
+    </div>
+    
+    <script type="text/javascript">
+    	var bkxx=($("#right").data("memberInfo"));
+    	
+    	$("#name").html(bkxx.realName);
+    	$("#type").html(bkxx.idCard);
+    	$("#gender").html(bkxx.sex);
+    	$("#phoneNumber").html(bkxx.phoneNumber);
+    	$("#memberClass").html(bkxx.memberlevel);
+    	$("#remark").html(bkxx.comment);
+    	
+    	$(".okButton").on("click",function(){
+    		
+    	$("#right").load("bingke.html");
+    	})
+    </script>
+</body>
+</html>
