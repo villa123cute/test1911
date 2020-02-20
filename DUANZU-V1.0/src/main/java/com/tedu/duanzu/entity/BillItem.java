@@ -17,7 +17,7 @@ public class BillItem {
 	private Double income;
 	private Integer status;
 	// 
-	
+	//0220 jbj
 	
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	private Date arrivalDate;
