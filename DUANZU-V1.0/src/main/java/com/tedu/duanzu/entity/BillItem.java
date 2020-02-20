@@ -67,13 +67,13 @@ public class BillItem {
 	}
 	public String getStatus() {
 		if(status==1) {
-			return "已转账";
+			return "宸茶浆璐�";
 		}else if(status==2) {
-			return "未转账";
+			return "鏈浆璐�";
 		}else if(status==3) {
-			return "转账失败";
+			return "杞处澶辫触";
 		}else {
-			return "无状态";
+			return "鏃犵姸鎬�";
 		}
 	}
 	public void setStatus(int status) {
@@ -91,5 +91,5 @@ public class BillItem {
 	public void setLandlordId(Integer landlordId) {
 		this.landlordId = landlordId;
 	}
-	
+	//。。
 }

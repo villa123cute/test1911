@@ -39,6 +39,7 @@ public class House
 
    private String status;
 
+   //priate
    
 	
 }
