@@ -15,6 +15,7 @@
 	<name>CGB1908-DUANZU-v1.0</name>
 	<description>duanzu project for Spring Boot</description>
 
+
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
